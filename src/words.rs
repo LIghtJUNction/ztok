@@ -1,6 +1,7 @@
 //! A byte-oriented greedy text transform over the fixed v1 vocabulary.
 include!(concat!(env!("OUT_DIR"), "/words.rs"));
-pub static HISTORY: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/words.bin"));
+pub static PRESET_V2: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/preset-v2.zdict"));
+pub static HISTORY: &[u8] = PRESET_V2.split_at(HISTORY_START).1.split_at(HISTORY_LEN).0;
 
 const SHORT: usize = 61;
 const MAX_WORD: usize = 32;
@@ -103,10 +104,17 @@ pub fn decode(input: &[u8], expected: usize) -> Result<Vec<u8>, String> {
             0x80..=0xbc => word(usize::from(lead - 0x80)),
             0xc2..=0xf4 => {
                 let start = pos - 1;
-                pos = start + scalar_len(lead);
-                let bytes = input.get(start..pos).ok_or("truncated UTF-8 literal")?;
-                std::str::from_utf8(bytes).map_err(|_| "invalid UTF-8 literal")?;
-                bytes
+                let rest = &input[start..];
+                // Token opcodes cannot start a UTF-8 scalar. The validator can
+                // therefore locate the whole literal run, including following
+                // ASCII, in one pass over multilingual text.
+                let n = match std::str::from_utf8(rest) {
+                    Ok(_) => rest.len(),
+                    Err(e) if e.valid_up_to() != 0 => e.valid_up_to(),
+                    Err(_) => return Err("invalid UTF-8 literal".into()),
+                };
+                pos = start + n;
+                &rest[..n]
             }
             _ => {
                 let page = if lead <= 0xc1 {

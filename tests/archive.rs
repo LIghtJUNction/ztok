@@ -67,15 +67,18 @@ fn corrupt_headers_frames_and_transforms_are_rejected() {
     let mut trailing = encoded.clone();
     trailing.push(0);
     assert!(decompress(&trailing).is_err());
-    // These lengths both fit in one varint for this fixture.
-    assert!(matches!(encoded[4], 1 | 3) && encoded[5] < 128 && encoded[6] < 128);
-    let mut wrong_vocab = encoded.clone();
+    // A real compact file with an unrecognized transform must fail closed.
+    let mut unknown = encoded.clone();
+    unknown[0] = 0x07;
+    assert!(decompress(&unknown).is_err());
+    let legacy_fixture =
+        hex("5a544b0101221d0bab8fea28b52ffd241081000080bfc365be9bf8058a80206d6f72c16ff9de97bbff");
+    let mut wrong_vocab = legacy_fixture.clone();
     wrong_vocab[7] ^= 1;
     assert!(decompress(&wrong_vocab).unwrap_err().contains("vocabulary"));
-    let mut unchecked = encoded.clone();
-    unchecked[11 + 4] &= !4;
+    let mut unchecked = legacy_fixture.clone();
+    unchecked[15] &= !4;
     assert!(decompress(&unchecked).unwrap_err().contains("checksum"));
-
     for bad in [
         &b"ZTK\x02\xff"[..],
         b"ZTK\x01\x80",
@@ -94,7 +97,7 @@ fn corrupt_headers_frames_and_transforms_are_rejected() {
         let mut archive = b"ZTK\x01".to_vec();
         archive.extend([mode, 12, frame.len() as u8]);
         if mode == 1 {
-            archive.extend_from_slice(&encoded[7..11]);
+            archive.extend_from_slice(&legacy_fixture[7..11]);
         }
         archive.extend(frame);
         archive.push(255);
@@ -168,4 +171,76 @@ fn cli_files_preserve_existing_outputs_and_rollback_failed_decodes() {
         "temporary output left behind"
     );
     fs::remove_dir_all(dir).unwrap();
+}
+
+fn hex(text: &str) -> Vec<u8> {
+    (0..text.len())
+        .step_by(2)
+        .map(|i| u8::from_str_radix(&text[i..i + 2], 16).unwrap())
+        .collect()
+}
+
+#[test]
+fn read_archives_from_the_original_executable() {
+    let cases = [
+        (
+            "5a544b0100101d28b52ffd2410810000000102030405060708090a0b0c0d0e0ff76941b8ff",
+            (0..16u8).collect(),
+        ),
+        (
+            "5a544b0101221d0bab8fea28b52ffd241081000080bfc365be9bf8058a80206d6f72c16ff9de97bbff",
+            b" the meeting starts in the morning".to_vec(),
+        ),
+        (
+            "5a544b0103ca11310bab8fea28b52ffd64ca071d0100787468697473746f2074686565722e2005009a80ca1314b328e2806440ce0404280416f3fe17b7ff",
+            b"the method returns its result to the caller. ".repeat(50),
+        ),
+    ];
+    for (old, original) in cases {
+        let frame = hex(old);
+        assert_eq!(decompress(&frame).unwrap(), original);
+        let mut output = Vec::new();
+        decompress_stream(fragments(&frame, 3), &mut output).unwrap();
+        assert_eq!(output, original);
+    }
+}
+
+#[test]
+fn best_counts_all_framing_and_agrees_between_readers() {
+    for data in [
+        vec![],
+        b"hello".to_vec(),
+        b"fn grow() { return; }".repeat(500),
+        (0..=255u8).cycle().take(32_000).collect(),
+    ] {
+        let archive = ztok::compress_best(&data, 3).unwrap();
+        assert!(archive.len() <= plain_compress(&data, 3).unwrap().len());
+        assert!(archive.len() <= compress(&data, 3).unwrap().len());
+        let mut stream = Vec::new();
+        ztok::compress_best_stream(fragments(&data, 3), &mut stream, 3).unwrap();
+        assert_eq!(archive, stream);
+        assert_eq!(decompress(&archive).unwrap(), data);
+    }
+}
+
+#[test]
+fn size_priority_stays_in_one_frame_through_16_mib() {
+    for n in [
+        BLOCK_SIZE + 19,
+        ztok::BEST_BLOCK_SIZE,
+        ztok::BEST_BLOCK_SIZE + 1,
+    ] {
+        let mut data = vec![0u8; n];
+        data[..8].copy_from_slice(b"\x89PNG\r\n\x1a\n");
+        let result = ztok::compress_best(&data, 3).unwrap();
+        if n <= ztok::BEST_BLOCK_SIZE {
+            assert_eq!(result, plain_compress(&data, 3).unwrap());
+        } else {
+            assert!(result.starts_with(b"ZTK\x02"));
+        }
+        let mut streamed = Vec::new();
+        ztok::compress_best_stream(fragments(&data, 8093), &mut streamed, 3).unwrap();
+        assert_eq!(result, streamed);
+        assert_eq!(decompress(&streamed).unwrap(), data);
+    }
 }

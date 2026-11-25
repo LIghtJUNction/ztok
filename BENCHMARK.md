@@ -1,4 +1,7 @@
-# Compression benchmark
+# ztok 0.1.0 compression benchmark
+
+These results and commands describe commit `67155209ee98836be539806cda4c74119447b7fc`. For 0.2.0 see the [real-file benchmark](REAL_BENCHMARK.md).
+
 
 ## Results
 

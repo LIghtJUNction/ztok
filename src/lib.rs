@@ -1,18 +1,33 @@
 //! Lossless, block-streaming compression with a built-in Gemma 4 vocabulary.
+mod codec;
 mod dynamic;
+mod gettext;
+mod legacy;
 mod words;
 mod zstd;
 
 use std::io::{self, Read, Write};
 pub use zstd::{plain_compress, plain_decompress};
 
-const MAGIC: &[u8; 4] = b"ZTK\x01";
-pub const BLOCK_SIZE: usize = 1 << 20;
+const V1: &[u8; 4] = b"ZTK\x01";
+const V2: &[u8; 4] = b"ZTK\x02";
+pub const BLOCK_SIZE: usize = 4 << 20;
+/// Maximum independent input for the size-priority encoder.
+pub const BEST_BLOCK_SIZE: usize = 16 << 20;
+const MAX_FRAME: usize = BEST_BLOCK_SIZE + BEST_BLOCK_SIZE / 128 + 128;
 const END: u8 = 255;
 const PLAIN: u8 = 0;
 const TOKENS: u8 = 1;
 const DYNAMIC: u8 = 2;
 const HISTORY: u8 = 3;
+const PRESET: u8 = 4;
+const X86: u8 = 5;
+const GETTEXT: u8 = 6;
+const TOKEN_PRESET: u8 = 7;
+
+// These immutable dispatch bytes identify the transform *and* its version.
+// The standard zstd prefix represents a portable, dictionary-free block.
+const TAGS: [u8; 8] = [0x28, 0xa7, 0x59, 0xc3, 0x96, 0x3c, 0x4e, 0xf0];
 
 fn invalid(msg: impl Into<String>) -> io::Error {
     io::Error::new(io::ErrorKind::InvalidData, msg.into())
@@ -54,86 +69,14 @@ fn get_size(reader: &mut impl Read, limit: usize) -> io::Result<usize> {
     Err(invalid("block length exceeds format limit"))
 }
 
-fn text_block(input: &[u8]) -> bool {
-    // Reject binary control bytes, including NULs in UTF-16 and object files.
-    !input.iter().any(|&b| b < 32 && !matches!(b, 9..=13)) && std::str::from_utf8(input).is_ok()
-}
-
-fn repeated_words(input: &[u8]) -> bool {
-    if input.len() < 64 {
-        return false;
-    }
-    if input.starts_with(b"\x1f\x8b")
-        || input.starts_with(b"\x89PNG\r\n\x1a\n")
-        || input.starts_with(b"\xff\xd8\xff")
-        || input.starts_with(b"PK\x03\x04")
-        || input.starts_with(&[0x28, 0xb5, 0x2f, 0xfd])
-    {
-        return false;
-    }
-    let count = (input.len() / 4).min(256);
-    let mut seen = [0u64; 64];
-    let mut hits = 0;
-    for j in 0..count {
-        let offset = (j * (input.len() / 4) / count) * 4;
-        let x = u32::from_le_bytes(input[offset..offset + 4].try_into().unwrap());
-        let key = ((x ^ x.rotate_left(15)).wrapping_mul(0x9e3779b1) >> 20) as usize;
-        let mask = 1u64 << (key & 63);
-        let slot = &mut seen[key >> 6];
-        hits += (*slot & mask != 0) as usize;
-        if hits > count / 16 {
-            return true;
-        }
-        *slot |= mask;
-    }
-    false
-}
-
-fn select(input: &[u8], level: i32) -> Result<(u8, Vec<u8>), String> {
-    if text_block(input) {
-        if input.len() <= 2048 {
-            let tokens = words::encode(input);
-            // A token hit saves at least one byte. With meaningful coverage a
-            // short block needs only one zstd call and no native CDict setup.
-            if input.len() - tokens.len() >= input.len().div_ceil(16) {
-                return Ok((TOKENS, plain_compress(&tokens, level)?));
-            }
-        }
-        return Ok((HISTORY, zstd::compress_frame(input, level, true)?));
-    }
-    let plain = plain_compress(input, level)?;
-    if repeated_words(input)
-        && let Some(stream) = dynamic::encode(input)
-    {
-        let packed = plain_compress(&stream, level)?;
-        if packed.len() < plain.len() {
-            return Ok((DYNAMIC, packed));
-        }
-    }
-    Ok((PLAIN, plain))
-}
-
-fn write_block(input: &[u8], level: i32, writer: &mut impl Write) -> io::Result<()> {
-    let (kind, frame) = select(input, level).map_err(invalid)?;
-    writer.write_all(&[kind])?;
-    put_size(input.len(), writer)?;
-    put_size(frame.len(), writer)?;
-    if matches!(kind, HISTORY | TOKENS) {
-        writer.write_all(&words::ID)?;
-    }
-    writer.write_all(&frame)
-}
-
-fn check_level(level: i32) -> io::Result<()> {
+fn check_level(level: i32) -> Result<(), String> {
     if (1..=19).contains(&level) {
         Ok(())
     } else {
-        Err(invalid("level must be between 1 and 19"))
+        Err("level must be between 1 and 19".into())
     }
 }
 
-// If a block ends part-way through a valid UTF-8 scalar, carry at most three
-// bytes into the next block. Binary input is still reconstructed exactly.
 fn split_at(input: &[u8]) -> usize {
     for i in (input.len().saturating_sub(3)..input.len()).rev() {
         match input[i] {
@@ -147,150 +90,182 @@ fn split_at(input: &[u8]) -> usize {
     input.len()
 }
 
-/// Compress a byte slice. For large files use the bounded streaming API.
-pub fn compress(mut input: &[u8], level: i32) -> Result<Vec<u8>, String> {
-    check_level(level).map_err(|e| e.to_string())?;
-    let mut out = Vec::from(MAGIC.as_slice());
+/// Encode a file with automatic routing, reusing the prepared dictionaries.
+pub fn compress(input: &[u8], level: i32) -> Result<Vec<u8>, String> {
+    encode_slice(input, level, false)
+}
+
+/// Select the smallest complete representation among applicable encoders per block.
+pub fn compress_best(input: &[u8], level: i32) -> Result<Vec<u8>, String> {
+    encode_slice(input, level, true)
+}
+
+fn encode_slice(mut input: &[u8], level: i32, best: bool) -> Result<Vec<u8>, String> {
+    check_level(level)?;
+    let limit = if best { BEST_BLOCK_SIZE } else { BLOCK_SIZE };
+    if input.is_empty() {
+        return Ok([V2.as_slice(), &[0]].concat());
+    }
+    if input.len() <= limit {
+        return codec::encode(input, level, best);
+    }
+    let mut output = Vec::from(V2.as_slice());
     while !input.is_empty() {
-        let n = if input.len() >= BLOCK_SIZE {
-            split_at(&input[..BLOCK_SIZE])
+        let n = if input.len() > limit {
+            split_at(&input[..limit])
         } else {
             input.len()
         };
-        write_block(&input[..n], level, &mut out).map_err(|e| e.to_string())?;
+        let frame = codec::encode(&input[..n], level, best)?;
+        put_size(frame.len(), &mut output).expect("Vec write");
+        output.extend_from_slice(&frame);
         input = &input[n..];
     }
-    out.push(END);
-    Ok(out)
-}
-
-/// Compress a reader in independent blocks of at most one MiB.
-pub fn compress_stream(
-    mut reader: impl Read,
-    mut writer: impl Write,
-    level: i32,
-) -> io::Result<()> {
-    check_level(level)?;
-    writer.write_all(MAGIC)?;
-    let mut block = vec![0u8; BLOCK_SIZE];
-    let mut used = 0;
-    loop {
-        let n = loop {
-            match reader.read(&mut block[used..]) {
-                Err(e) if e.kind() == io::ErrorKind::Interrupted => continue,
-                other => break other?,
-            }
-        };
-        used += n;
-        if n == 0 {
-            if used > 0 {
-                write_block(&block[..used], level, &mut writer)?;
-            }
-            break;
-        }
-        if used == BLOCK_SIZE {
-            let end = split_at(&block);
-            write_block(&block[..end], level, &mut writer)?;
-            block.copy_within(end.., 0);
-            used -= end;
-        }
-    }
-    writer.write_all(&[END])
-}
-
-struct Block {
-    kind: u8,
-    original: usize,
-    length: usize,
-}
-
-fn check_magic(reader: &mut impl Read) -> io::Result<()> {
-    let mut magic = [0; 4];
-    reader.read_exact(&mut magic)?;
-    if magic != *MAGIC {
-        return Err(invalid("unknown ztok format or version"));
-    }
-    Ok(())
-}
-
-fn next_block(reader: &mut impl Read) -> io::Result<Option<Block>> {
-    let kind = byte(reader)?;
-    if kind == END {
-        return match reader.read_exact(&mut [0]) {
-            Err(e) if e.kind() == io::ErrorKind::UnexpectedEof => Ok(None),
-            Err(e) => Err(e),
-            Ok(()) => Err(invalid("trailing bytes after archive")),
-        };
-    }
-    if kind > HISTORY {
-        return Err(invalid("unknown block mode"));
-    }
-    let original = get_size(reader, BLOCK_SIZE)?;
-    let length = get_size(reader, 2 * BLOCK_SIZE)?;
-    if original == 0 || length == 0 {
-        return Err(invalid("empty archive block"));
-    }
-    if matches!(kind, TOKENS | HISTORY) {
-        let mut id = [0; 4];
-        reader.read_exact(&mut id)?;
-        if id != words::ID {
-            return Err(invalid("Gemma vocabulary version mismatch"));
-        }
-    }
-    Ok(Some(Block {
-        kind,
-        original,
-        length,
-    }))
-}
-
-impl Block {
-    fn decode(&self, frame: &[u8]) -> io::Result<Vec<u8>> {
-        let original = self.original;
-        match self.kind {
-            PLAIN | HISTORY => zstd::decompress_frame(frame, original, self.kind == HISTORY),
-            TOKENS | DYNAMIC => {
-                let size = zstd::content_len(frame, original).map_err(invalid)?;
-                let stream = plain_decompress(frame, size).map_err(invalid)?;
-                if self.kind == TOKENS {
-                    words::decode(&stream, original)
-                } else {
-                    dynamic::decode(&stream, original)
-                }
-            }
-            _ => unreachable!(),
-        }
-        .map_err(invalid)
-    }
-}
-
-/// Decompress an archive into memory. The streaming API keeps memory bounded.
-pub fn decompress(mut input: &[u8]) -> Result<Vec<u8>, String> {
-    check_magic(&mut input).map_err(|e| e.to_string())?;
-    let mut output = Vec::new();
-    while let Some(block) = next_block(&mut input).map_err(|e| e.to_string())? {
-        let (frame, rest) = input
-            .split_at_checked(block.length)
-            .ok_or("truncated ztok frame")?;
-        input = rest;
-        let decoded = block.decode(frame).map_err(|e| e.to_string())?;
-        if output.is_empty() {
-            output = decoded;
-        } else {
-            output.extend_from_slice(&decoded);
-        }
-    }
+    output.push(0);
     Ok(output)
 }
 
-/// Validate and decode one complete archive. Fail on missing end marker/trailing data.
-pub fn decompress_stream(mut reader: impl Read, mut writer: impl Write) -> io::Result<()> {
-    check_magic(&mut reader)?;
-    let mut frame = Vec::new();
-    while let Some(block) = next_block(&mut reader)? {
-        frame.resize(block.length, 0);
-        reader.read_exact(&mut frame)?;
-        writer.write_all(&block.decode(&frame)?)?;
+/// Encode a reader with bounded working memory (four MiB maximum input per block).
+pub fn compress_stream(reader: impl Read, writer: impl Write, level: i32) -> io::Result<()> {
+    encode_stream(reader, writer, level, false)
+}
+
+/// Streaming equivalent of `compress_best`.
+pub fn compress_best_stream(reader: impl Read, writer: impl Write, level: i32) -> io::Result<()> {
+    encode_stream(reader, writer, level, true)
+}
+
+fn encode_stream(
+    mut reader: impl Read,
+    mut writer: impl Write,
+    level: i32,
+    best: bool,
+) -> io::Result<()> {
+    check_level(level).map_err(invalid)?;
+    let mut block = Vec::with_capacity(8192);
+    let limit = if best { BEST_BLOCK_SIZE } else { BLOCK_SIZE };
+    let mut multi = false;
+    loop {
+        let space = limit + 1 - block.len();
+        reader.by_ref().take(space as u64).read_to_end(&mut block)?;
+        let last = block.len() <= limit;
+        if !multi && (block.is_empty() || !last) {
+            writer.write_all(V2)?;
+            multi = true;
+        }
+        let n = if last {
+            block.len()
+        } else {
+            split_at(&block[..limit])
+        };
+        if n > 0 {
+            let frame = codec::encode(&block[..n], level, best).map_err(invalid)?;
+            if multi {
+                put_size(frame.len(), &mut writer)?;
+            }
+            writer.write_all(&frame)?;
+        }
+        if last {
+            break;
+        }
+        block.copy_within(n.., 0);
+        block.truncate(block.len() - n);
+    }
+    if multi {
+        writer.write_all(&[0])?;
     }
     Ok(())
+}
+
+fn mode(prefix: u8) -> Option<u8> {
+    TAGS.iter().position(|&tag| tag == prefix).map(|i| i as u8)
+}
+
+/// Return the first block's encoding for inspection (0xff is an empty archive).
+/// This only inspects a prefix. Decompression validates the complete archive.
+pub fn first_mode(mut input: &[u8]) -> Option<u8> {
+    if input.starts_with(V1) {
+        return input.get(4).copied();
+    }
+    if input.starts_with(V2) {
+        input = &input[4..];
+        let n = get_size(&mut input, MAX_FRAME).ok()?;
+        if n == 0 {
+            return Some(END);
+        }
+    }
+    mode(*input.first()?)
+}
+
+fn unpack(mut frame: &[u8]) -> Result<Vec<u8>, String> {
+    if frame.len() > MAX_FRAME {
+        return Err("oversized compact block".into());
+    }
+    let kind =
+        mode(*frame.first().ok_or("empty compact block")?).ok_or("unknown compact block mode")?;
+    if kind != PLAIN {
+        frame = &frame[1..];
+    }
+    let original = if matches!(kind, TOKENS | DYNAMIC | TOKEN_PRESET) {
+        Some(get_size(&mut frame, BEST_BLOCK_SIZE).map_err(|e| e.to_string())?)
+    } else {
+        None
+    };
+    let size = zstd::content_len(frame, original.unwrap_or(BEST_BLOCK_SIZE))?;
+    codec::decode(kind, frame, size, original.unwrap_or(size))
+}
+
+/// Decode a complete archive including version 0.1 archives.
+pub fn decompress(mut input: &[u8]) -> Result<Vec<u8>, String> {
+    if let Some(rest) = input.strip_prefix(V1) {
+        return legacy::decompress(rest);
+    }
+    if !input.starts_with(V2) {
+        return unpack(input);
+    }
+    input = &input[4..];
+    let mut output = Vec::new();
+    loop {
+        let n = get_size(&mut input, MAX_FRAME).map_err(|e| e.to_string())?;
+        if n == 0 {
+            return if input.is_empty() {
+                Ok(output)
+            } else {
+                Err("trailing data after archive".into())
+            };
+        }
+        let (frame, rest) = input.split_at_checked(n).ok_or("truncated compact block")?;
+        output.extend_from_slice(&unpack(frame)?);
+        input = rest;
+    }
+}
+
+/// Decode a complete archive without accumulating the output file in memory.
+pub fn decompress_stream(mut reader: impl Read, mut writer: impl Write) -> io::Result<()> {
+    let mut magic = [0; 4];
+    reader.read_exact(&mut magic)?;
+    if &magic == V1 {
+        return legacy::decompress_stream(reader, writer);
+    }
+    let mut frame = Vec::new();
+    if &magic != V2 {
+        frame.extend_from_slice(&magic);
+        reader
+            .take((MAX_FRAME - 3) as u64)
+            .read_to_end(&mut frame)?;
+        return writer.write_all(&unpack(&frame).map_err(invalid)?);
+    }
+    loop {
+        let n = get_size(&mut reader, MAX_FRAME)?;
+        if n == 0 {
+            return match reader.read_exact(&mut [0]) {
+                Err(e) if e.kind() == io::ErrorKind::UnexpectedEof => Ok(()),
+                Err(e) => Err(e),
+                Ok(()) => Err(invalid("trailing data after archive")),
+            };
+        }
+        frame.resize(n, 0);
+        reader.read_exact(&mut frame)?;
+        writer.write_all(&unpack(&frame).map_err(invalid)?)?;
+    }
 }

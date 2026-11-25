@@ -11,9 +11,46 @@ fn index(n: usize) -> u16 {
     u16::try_from(n).expect("v1 tables must fit 16-bit offsets")
 }
 
+fn read_preset(path: &str) -> Vec<u8> {
+    println!("cargo:rerun-if-changed={path}");
+    let hex = fs::read_to_string(path).unwrap();
+    let mut bytes = Vec::new();
+    for line in hex.lines() {
+        assert!(line.is_ascii() && line.len() % 2 == 0);
+        for i in (0..line.len()).step_by(2) {
+            bytes.push(u8::from_str_radix(&line[i..i + 2], 16).unwrap());
+        }
+    }
+    bytes
+}
+
+fn fingerprint64(bytes: &[u8]) -> u64 {
+    bytes.iter().fold(0xcbf29ce484222325u64, |hash, &b| {
+        (hash ^ u64::from(b)).wrapping_mul(0x100000001b3)
+    })
+}
+
 fn main() {
     println!("cargo:rerun-if-changed=data/vocab.txt");
     let dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+    let preset = read_preset("data/preset-v2.hex");
+    let token_preset = read_preset("data/token-preset-v2.hex");
+    assert_eq!(
+        fingerprint64(&token_preset),
+        0x6893417f9604cb59,
+        "v2 token preset changed"
+    );
+    fs::write(dir.join("token-preset-v2.zdict"), token_preset).unwrap();
+    // These fingerprints are archive identities. Edits require a new tag.
+    assert_eq!(
+        &preset[..8],
+        &[0x37, 0xa4, 0x30, 0xec, 0x6b, 0x6f, 0x74, 0x32]
+    );
+    assert_eq!(
+        fingerprint64(&preset),
+        0x25bbaedb860e6dd0,
+        "v2 text preset changed"
+    );
     let source = fs::read_to_string("data/vocab.txt").unwrap();
     let mut prefix = vec![0u16; 65536];
     let mut nodes = vec![Node::default()]; // zero means missing
@@ -54,6 +91,7 @@ fn main() {
         nodes[node].rank = index(rank + 1);
     }
     assert_eq!(offsets.len(), 4097);
+    assert_eq!(fingerprint, 0xea8fab0b, "v1 word identities changed");
     let mut edge_keys = Vec::new();
     let mut edge_targets = Vec::new();
     let mut starts = Vec::new();
@@ -123,6 +161,14 @@ fn main() {
         *offset = index(history.len()) - *offset;
     }
     table!(WORD_OFFSET, u16, offsets);
-    fs::write(dir.join("words.bin"), history).unwrap();
+    // v2 embeds v1 history verbatim directly after its native entropy header.
+    let start = 163usize;
+    assert_eq!(
+        preset.get(start..start + history.len()),
+        Some(history.as_slice())
+    );
+    writeln!(tables, "const HISTORY_START: usize = {start};").unwrap();
+    writeln!(tables, "const HISTORY_LEN: usize = {};", history.len()).unwrap();
+    fs::write(dir.join("preset-v2.zdict"), preset).unwrap();
     fs::write(dir.join("words.rs"), tables).unwrap();
 }

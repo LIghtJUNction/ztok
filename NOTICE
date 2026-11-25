@@ -11,3 +11,9 @@ License: https://ai.google.dev/gemma/docs/gemma_4_license
 Project Z modified the vocabulary by filtering entries, decoding the space
 marker, selecting a subset, and assigning new compression IDs. The upstream
 model, weights and tokenizer runtime are not included.
+
+Version 0.2 preset dictionaries
+The static presets combine the above Gemma-derived vocabulary or its encoded
+tokens with samples from the public-domain SQLite 3.45.3 source and docs.
+Additional public calibration files supply entropy statistics. See
+data/preset-v2.md, data/token-preset-v2.md and tools/vocab-sources.tsv.

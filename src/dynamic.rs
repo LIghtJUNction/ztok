@@ -2,6 +2,50 @@
 //! IDs 0..126 cost one byte. IDs 127..382 cost two. Tags 128..255 introduce
 //! literal runs of 1..128 bytes. All integer fields use little-endian order.
 
+mod x86;
+pub(crate) use x86::{decode as x86_decode, encode as x86_encode};
+
+/// Look for repeated aligned fields before spending time on a local dictionary.
+pub(crate) fn candidate(input: &[u8]) -> bool {
+    if input.len() < 64
+        || input.starts_with(b"\x1f\x8b")
+        || input.starts_with(b"\x89PNG\r\n\x1a\n")
+        || input.starts_with(b"\xff\xd8\xff")
+        || input.starts_with(b"PK\x03\x04")
+        || input.starts_with(b"\x28\xb5\x2f\xfd")
+        || input.starts_with(b"\x7fELF")
+        || input.starts_with(b"%PDF-")
+        || input.starts_with(b"\xfd7zXZ\0")
+        || input.starts_with(b"BZh")
+        || input.starts_with(b"wOF2")
+    {
+        return false;
+    }
+    let words = input.as_chunks::<4>().0;
+    let n = words.len().min(256);
+    let mut seen = [0u64; 64];
+    let mut hits = 0;
+    // Consecutive windows distributed through the block retain the mix of
+    // fields in packed records even when their stride is a power of two.
+    let window = n.min(16);
+    let groups = n / window;
+    for group in 0..groups {
+        let start = (words.len() - window) * group / (groups - 1).max(1);
+        for &bytes in &words[start..start + window] {
+            let x = u32::from_le_bytes(bytes);
+            let key = ((x ^ x.rotate_left(15)).wrapping_mul(0x9e3779b1) >> 20) as usize;
+            let mask = 1u64 << (key & 63);
+            let slot = &mut seen[key >> 6];
+            hits += usize::from(*slot & mask != 0);
+            if hits > n / 12 {
+                return true;
+            }
+            *slot |= mask;
+        }
+    }
+    false
+}
+
 const SHORT_IDS: usize = 127;
 const MAX_ENTRIES: usize = SHORT_IDS + 256;
 const SAMPLE_WORDS: usize = 4096;

@@ -37,22 +37,127 @@ unsafe extern "C" {
     fn ZSTD_findFrameCompressedSize(src: *const u8, len: usize) -> usize;
 }
 
-struct Encoder(NonNull<c_void>, Option<(i32, NonNull<c_void>)>);
-struct Decoder(NonNull<c_void>, Option<NonNull<c_void>>);
+// Only embedded dictionaries enter this cache. Identity comparisons are O(1)
+// because each preset has immutable, static storage.
+type Key = (*const u8, usize);
+
+fn key(bytes: &'static [u8]) -> Key {
+    (bytes.as_ptr(), bytes.len())
+}
+
+struct Encoder {
+    ctx: NonNull<c_void>,
+    level: Option<i32>,
+    dictionaries: Vec<(Key, NonNull<c_void>)>,
+    selected: Option<Key>,
+}
+
 impl Drop for Encoder {
     fn drop(&mut self) {
-        unsafe { ZSTD_freeCCtx(self.0.as_ptr()) };
-        if let Some((_, d)) = self.1 {
-            unsafe { ZSTD_freeCDict(d.as_ptr()) };
+        unsafe { ZSTD_freeCCtx(self.ctx.as_ptr()) };
+        for (_, dictionary) in self.dictionaries.drain(..) {
+            unsafe { ZSTD_freeCDict(dictionary.as_ptr()) };
         }
     }
 }
+
+impl Encoder {
+    fn new() -> Result<Self, String> {
+        let ctx =
+            NonNull::new(unsafe { ZSTD_createCCtx() }).ok_or("zstd encoder allocation failed")?;
+        let encoder = Self {
+            ctx,
+            level: None,
+            dictionaries: Vec::new(),
+            selected: None,
+        };
+        // ZSTD_c_checksumFlag. This is sticky across independent frames.
+        check(unsafe { ZSTD_CCtx_setParameter(ctx.as_ptr(), 201, 1) })?;
+        // ZSTD_c_dictIDFlag. The compact preset tag identifies its immutable
+        // dictionary. Plain frames and the v1 raw history have no native ID.
+        check(unsafe { ZSTD_CCtx_setParameter(ctx.as_ptr(), 202, 0) })?;
+        Ok(encoder)
+    }
+
+    fn configure(&mut self, level: i32, preset: Option<&'static [u8]>) -> Result<(), String> {
+        let ctx = self.ctx.as_ptr();
+        if self.level != Some(level) {
+            if self.selected.is_some() {
+                check(unsafe { ZSTD_CCtx_refCDict(ctx, std::ptr::null()) })?;
+                self.selected = None;
+            }
+            for (_, dict) in self.dictionaries.drain(..) {
+                unsafe { ZSTD_freeCDict(dict.as_ptr()) };
+            }
+            // ZSTD_c_compressionLevel. A CDict is created with this same level.
+            check(unsafe { ZSTD_CCtx_setParameter(ctx, 100, level) })?;
+            self.level = Some(level);
+        }
+        let wanted = preset.map(key);
+        if self.selected == wanted {
+            return Ok(());
+        }
+        let dict = if let Some(bytes) = preset {
+            let id = key(bytes);
+            match self.dictionaries.iter().find(|(k, _)| *k == id) {
+                Some((_, handle)) => handle.as_ptr(),
+                None => {
+                    let handle = NonNull::new(unsafe {
+                        ZSTD_createCDict(bytes.as_ptr(), bytes.len(), level)
+                    })
+                    .ok_or("zstd compression dictionary allocation failed")?;
+                    self.dictionaries.push((id, handle));
+                    handle.as_ptr()
+                }
+            }
+        } else {
+            std::ptr::null_mut()
+        };
+        check(unsafe { ZSTD_CCtx_refCDict(ctx, dict) })?;
+        self.selected = wanted;
+        Ok(())
+    }
+}
+
+struct Decoder {
+    ctx: NonNull<c_void>,
+    dictionaries: Vec<(Key, NonNull<c_void>)>,
+    selected: Option<Key>,
+}
+
 impl Drop for Decoder {
     fn drop(&mut self) {
-        unsafe { ZSTD_freeDCtx(self.0.as_ptr()) };
-        if let Some(d) = self.1 {
-            unsafe { ZSTD_freeDDict(d.as_ptr()) };
+        unsafe { ZSTD_freeDCtx(self.ctx.as_ptr()) };
+        for (_, dict) in self.dictionaries.drain(..) {
+            unsafe { ZSTD_freeDDict(dict.as_ptr()) };
         }
+    }
+}
+
+impl Decoder {
+    fn configure(&mut self, preset: Option<&'static [u8]>) -> Result<(), String> {
+        let wanted = preset.map(key);
+        if self.selected == wanted {
+            return Ok(());
+        }
+        let dict = if let Some(bytes) = preset {
+            let id = key(bytes);
+            match self.dictionaries.iter().find(|(k, _)| *k == id) {
+                Some((_, handle)) => handle.as_ptr(),
+                None => {
+                    let handle =
+                        NonNull::new(unsafe { ZSTD_createDDict(bytes.as_ptr(), bytes.len()) })
+                            .ok_or("zstd decompression dictionary allocation failed")?;
+                    self.dictionaries.push((id, handle));
+                    handle.as_ptr()
+                }
+            }
+        } else {
+            std::ptr::null_mut()
+        };
+        check(unsafe { ZSTD_DCtx_refDDict(self.ctx.as_ptr(), dict) })?;
+        self.selected = wanted;
+        Ok(())
     }
 }
 thread_local! {
@@ -74,35 +179,32 @@ pub fn plain_compress(input: &[u8], level: i32) -> Result<Vec<u8>, String> {
 }
 
 pub(crate) fn compress_frame(input: &[u8], level: i32, history: bool) -> Result<Vec<u8>, String> {
+    encode_frame(input, level, history.then_some(crate::words::HISTORY))
+}
+
+pub(crate) fn compress_with_dict(
+    input: &[u8],
+    level: i32,
+    dict: &'static [u8],
+) -> Result<Vec<u8>, String> {
+    encode_frame(input, level, Some(dict))
+}
+
+fn encode_frame(
+    input: &[u8],
+    level: i32,
+    preset: Option<&'static [u8]>,
+) -> Result<Vec<u8>, String> {
     ENCODER.with_borrow_mut(|slot| {
         if slot.is_none() {
-            *slot = Some(Encoder(
-                NonNull::new(unsafe { ZSTD_createCCtx() })
-                    .ok_or("zstd encoder allocation failed")?,
-                None,
-            ));
+            *slot = Some(Encoder::new()?);
         }
         let encoder = slot.as_mut().unwrap();
-        let ctx = encoder.0.as_ptr();
-        if history && encoder.1.is_none_or(|(cached, _)| cached != level) {
-            // Detach the old dictionary before releasing it.
-            check(unsafe { ZSTD_CCtx_refCDict(ctx, std::ptr::null()) })?;
-            let bytes = crate::words::HISTORY;
-            let new = NonNull::new(unsafe { ZSTD_createCDict(bytes.as_ptr(), bytes.len(), level) })
-                .ok_or("zstd compression dictionary allocation failed")?;
-            if let Some((_, old)) = encoder.1.replace((level, new)) {
-                unsafe { ZSTD_freeCDict(old.as_ptr()) };
-            }
-        }
-        let dict = encoder
-            .1
-            .filter(|_| history)
-            .map_or(std::ptr::null(), |(_, d)| d.as_ptr());
-        check(unsafe { ZSTD_CCtx_refCDict(ctx, dict) })?;
-        // ZSTD_c_compressionLevel and ZSTD_c_checksumFlag from zstd.h.
-        check(unsafe { ZSTD_CCtx_setParameter(ctx, 100, level) })?;
-        check(unsafe { ZSTD_CCtx_setParameter(ctx, 201, 1) })?;
-        let mut out = Vec::with_capacity(unsafe { ZSTD_compressBound(input.len()) });
+        encoder.configure(level, preset)?;
+        let ctx = encoder.ctx.as_ptr();
+        let mut out = Vec::new();
+        out.try_reserve_exact(unsafe { ZSTD_compressBound(input.len()) })
+            .map_err(|_| "zstd compression buffer too large")?;
         let n = check(unsafe {
             ZSTD_compress2(
                 ctx,
@@ -126,7 +228,7 @@ pub(crate) fn content_len(frame: &[u8], limit: usize) -> Result<usize, String> {
         return Err("expected a checksummed Zstandard frame".into());
     }
     let n = unsafe { ZSTD_getFrameContentSize(frame.as_ptr(), frame.len()) };
-    if n > limit as u64 {
+    if n >= u64::MAX - 1 || n > limit as u64 {
         return Err("invalid or excessive Zstandard content size".into());
     }
     Ok(n as usize)
@@ -142,6 +244,22 @@ pub(crate) fn decompress_frame(
     expected: usize,
     history: bool,
 ) -> Result<Vec<u8>, String> {
+    decode_frame(frame, expected, history.then_some(crate::words::HISTORY))
+}
+
+pub(crate) fn decompress_with_dict(
+    frame: &[u8],
+    expected: usize,
+    dict: &'static [u8],
+) -> Result<Vec<u8>, String> {
+    decode_frame(frame, expected, Some(dict))
+}
+
+fn decode_frame(
+    frame: &[u8],
+    expected: usize,
+    preset: Option<&'static [u8]>,
+) -> Result<Vec<u8>, String> {
     if content_len(frame, expected)? != expected
         || check(unsafe { ZSTD_findFrameCompressedSize(frame.as_ptr(), frame.len()) })?
             != frame.len()
@@ -150,27 +268,20 @@ pub(crate) fn decompress_frame(
     }
     DECODER.with_borrow_mut(|slot| {
         if slot.is_none() {
-            *slot = Some(Decoder(
-                NonNull::new(unsafe { ZSTD_createDCtx() })
-                    .ok_or("zstd decoder allocation failed")?,
-                None,
-            ));
+            let ctx = NonNull::new(unsafe { ZSTD_createDCtx() })
+                .ok_or("zstd decoder allocation failed")?;
+            *slot = Some(Decoder {
+                ctx,
+                dictionaries: Vec::new(),
+                selected: None,
+            });
         }
         let decoder = slot.as_mut().unwrap();
-        let ctx = decoder.0.as_ptr();
-        if history && decoder.1.is_none() {
-            let bytes = crate::words::HISTORY;
-            decoder.1 = Some(
-                NonNull::new(unsafe { ZSTD_createDDict(bytes.as_ptr(), bytes.len()) })
-                    .ok_or("zstd decompression dictionary allocation failed")?,
-            );
-        }
-        let dict = decoder
-            .1
-            .filter(|_| history)
-            .map_or(std::ptr::null(), |d| d.as_ptr());
-        check(unsafe { ZSTD_DCtx_refDDict(ctx, dict) })?;
-        let mut out = Vec::with_capacity(expected);
+        decoder.configure(preset)?;
+        let ctx = decoder.ctx.as_ptr();
+        let mut out = Vec::new();
+        out.try_reserve_exact(expected)
+            .map_err(|_| "zstd decompression buffer too large")?;
         let n = check(unsafe {
             ZSTD_decompressDCtx(ctx, out.as_mut_ptr(), expected, frame.as_ptr(), frame.len())
         })?;
@@ -182,4 +293,44 @@ pub(crate) fn decompress_frame(
         }
         Ok(out)
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn compact_preset_supplies_the_dictionary_id_out_of_band() {
+        static DICT: &[u8] = include_bytes!(concat!(env!("OUT_DIR"), "/preset-v2.zdict"));
+        assert_eq!(&DICT[..4], &[0x37, 0xa4, 0x30, 0xec]);
+        assert_ne!(&DICT[4..8], &[0; 4]);
+        let input = &DICT[DICT.len() - 512..];
+        let frame = compress_with_dict(input, 3, DICT).unwrap();
+        assert_eq!(frame[4] & 3, 0);
+        assert_eq!(
+            decompress_with_dict(&frame, input.len(), DICT).unwrap(),
+            input
+        );
+        assert!(plain_decompress(&frame, input.len()).is_err());
+    }
+
+    #[test]
+    fn sticky_context_switches_between_independent_presets_and_plain() {
+        static A: &[u8] = b"An uncommon sample document contains this particular header.\nA different line follows the header.";
+        static B: &[u8] = b"Independent vocabulary for another category.\nThe opening clause remains an exact match.";
+        for level in [1, 3, 3, 9, 3] {
+            for dictionary in [A, B, A] {
+                let frame = compress_with_dict(dictionary, level, dictionary).unwrap();
+                let packed = plain_compress(dictionary, level).unwrap();
+                assert_eq!(
+                    plain_decompress(&packed, dictionary.len()).unwrap(),
+                    dictionary
+                );
+                assert_eq!(
+                    decompress_with_dict(&frame, dictionary.len(), dictionary).unwrap(),
+                    dictionary
+                );
+            }
+        }
+    }
 }

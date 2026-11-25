@@ -22,8 +22,17 @@ fn measure<F: FnMut()>(mut operation: F) -> f64 {
 }
 
 fn main() -> Result<(), String> {
-    let inputs: Vec<Vec<u8>> = env::args_os()
-        .skip(1)
+    let mut paths = env::args_os().skip(1).peekable();
+    let best = paths.peek().is_some_and(|arg| arg == "--best");
+    if best {
+        paths.next();
+    }
+    let compress = if best {
+        ztok::compress_best
+    } else {
+        ztok::compress
+    };
+    let inputs: Vec<Vec<u8>> = paths
         .map(|path| fs::read(path).map_err(|e| e.to_string()))
         .collect::<Result<_, _>>()?;
     if inputs.is_empty() {
@@ -33,14 +42,17 @@ fn main() -> Result<(), String> {
     let mut plain_frames = Vec::new();
     let mut modes = BTreeMap::new();
     for input in &inputs {
-        let ours = ztok::compress(input, 3)?;
+        let ours = compress(input, 3)?;
         let plain = ztok::plain_compress(input, 3)?;
+        if best && input.len() <= ztok::BEST_BLOCK_SIZE && ours.len() > plain.len() {
+            return Err("best single-block archive exceeds the plain checksummed frame".into());
+        }
         if ztok::decompress(&ours)? != *input
             || ztok::plain_decompress(&plain, input.len())? != *input
         {
             return Err("round-trip mismatch".into());
         }
-        let mode = *ours.get(4).ok_or("truncated frame")?;
+        let mode = ztok::first_mode(&ours).ok_or("unknown archive")?;
         *modes.entry(mode).or_insert(0usize) += 1;
         ztok_frames.push(ours);
         plain_frames.push(plain);
@@ -53,7 +65,7 @@ fn main() -> Result<(), String> {
                 for (i, input) in inputs.iter().enumerate() {
                     black_box(
                         match op {
-                            0 => ztok::compress(black_box(input), 3),
+                            0 => compress(black_box(input), 3),
                             1 => ztok::plain_compress(black_box(input), 3),
                             2 => ztok::decompress(black_box(&ztok_frames[i])),
                             _ => ztok::plain_decompress(black_box(&plain_frames[i]), input.len()),

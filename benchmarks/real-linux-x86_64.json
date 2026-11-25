@@ -1,0 +1,5401 @@
+{
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "machine": "x86_64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "affinity": [
+    8
+  ],
+  "manifest_sha256": "9ca021f15b9370200024e35c7474ebec907d2e11bdc0204f82b8077abef08f08",
+  "libzstd": "1.5.7",
+  "compiler": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+  "release_binary_sha256": "a6cfa6298424a0d21d3ef8f0e32e3bd2ec5901753c86039ac31cedc69e9d2bb7",
+  "baseline_commit": "67155209ee98836be539806cda4c74119447b7fc",
+  "versions": {
+    "baseline": "ztok 0.1.0",
+    "candidate": "ztok 0.2.0",
+    "zstd": "*** Zstandard CLI (64-bit) v1.5.7, by Yann Collet ***"
+  },
+  "codecs": [
+    "old",
+    "default",
+    "best",
+    "zstd_cli"
+  ],
+  "timing_columns": [
+    "candidate_encode",
+    "libzstd_encode",
+    "candidate_decode",
+    "libzstd_decode"
+  ],
+  "timing_rounds": 7,
+  "minimum_ms_per_round": 25,
+  "level": 3,
+  "checksum": true,
+  "candidate_default_block_size": 4194304,
+  "candidate_best_block_size": 16777216,
+  "corpus_file_unit": "whole file; each file is compressed independently",
+  "groups": {
+    "holdout": {
+      "binaries": {
+        "timings": {
+          "old": {
+            "files": 4,
+            "input": 7573352,
+            "archive": 2833197,
+            "libzstd_archive": 2809072,
+            "first_block_modes": "0=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                76341589,
+                76995344,
+                82264754
+              ],
+              [
+                28922940,
+                29456435,
+                29645158
+              ],
+              [
+                7642242,
+                7784382,
+                8062511
+              ],
+              [
+                7417329,
+                7562588,
+                7646840
+              ]
+            ]
+          },
+          "default": {
+            "files": 4,
+            "input": 7573352,
+            "archive": 2572663,
+            "libzstd_archive": 2809072,
+            "first_block_modes": "5=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                30137781,
+                30187886,
+                32959252
+              ],
+              [
+                28887697,
+                28968239,
+                30232003
+              ],
+              [
+                8548581,
+                8716814,
+                8781075
+              ],
+              [
+                7472459,
+                7485369,
+                7712488
+              ]
+            ]
+          },
+          "best": {
+            "files": 4,
+            "input": 7573352,
+            "archive": 2572663,
+            "libzstd_archive": 2809072,
+            "first_block_modes": "5=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                59475335,
+                60619209,
+                81094741
+              ],
+              [
+                28820617,
+                28931233,
+                29769736
+              ],
+              [
+                8642539,
+                8751033,
+                9169500
+              ],
+              [
+                7415904,
+                7474292,
+                7564012
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 2833197,
+          "default": 2572663,
+          "best": 2572663,
+          "zstd_cli": 2817710
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "3923debbc9-vim.tiny": [
+            901034,
+            858277,
+            858277,
+            902662
+          ],
+          "49fa49d8c2-pdftoppm": [
+            14132,
+            13645,
+            13645,
+            14121
+          ],
+          "4a8c22d6a7-bitmap2component": [
+            1267758,
+            1121400,
+            1121400,
+            1258654
+          ],
+          "a4300c6203-strace": [
+            650273,
+            579341,
+            579341,
+            642273
+          ]
+        },
+        "fresh_process": {
+          "file": "49fa49d8c2-pdftoppm",
+          "bytes": 35344,
+          "rounds": 15,
+          "median_compress_decompress_ms": {
+            "old": [
+              1.624,
+              1.046
+            ],
+            "default": [
+              1.226,
+              0.989
+            ],
+            "best": [
+              1.339,
+              1.03
+            ],
+            "zstd_cli": [
+              1.58,
+              1.274
+            ]
+          }
+        }
+      },
+      "c-headers": {
+        "timings": {
+          "default": {
+            "files": 44,
+            "input": 1295539,
+            "archive": 225019,
+            "libzstd_archive": 259074,
+            "first_block_modes": "4=2,7=42",
+            "ordered_2_4_6_batch_ns": [
+              [
+                12077488,
+                12286192,
+                12512914
+              ],
+              [
+                3259928,
+                3294713,
+                3384514
+              ],
+              [
+                3668892,
+                3792914,
+                3945235
+              ],
+              [
+                957291,
+                971319,
+                1006044
+              ]
+            ]
+          },
+          "best": {
+            "files": 44,
+            "input": 1295539,
+            "archive": 224719,
+            "libzstd_archive": 259074,
+            "first_block_modes": "1=6,7=38",
+            "ordered_2_4_6_batch_ns": [
+              [
+                28715047,
+                29682896,
+                83827549
+              ],
+              [
+                3316140,
+                3444181,
+                4628419
+              ],
+              [
+                3658852,
+                3701871,
+                4882545
+              ],
+              [
+                948717,
+                1008738,
+                1139070
+              ]
+            ]
+          },
+          "old": {
+            "files": 44,
+            "input": 1295539,
+            "archive": 251235,
+            "libzstd_archive": 259074,
+            "first_block_modes": "1=2,3=42",
+            "ordered_2_4_6_batch_ns": [
+              [
+                5782122,
+                5822930,
+                5891860
+              ],
+              [
+                3225337,
+                3238543,
+                3290220
+              ],
+              [
+                1036416,
+                1041821,
+                1053669
+              ],
+              [
+                941806,
+                954937,
+                956802
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 44,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 44,
+        "default_single_block_files": 44,
+        "cli_archives": {
+          "old": 251235,
+          "default": 225019,
+          "best": 224719,
+          "zstd_cli": 259074
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "02572ea499-stl_multimap.h": [
+            8753,
+            7722,
+            7722,
+            9066
+          ],
+          "029793661f-version.h": [
+            9294,
+            8664,
+            8664,
+            9460
+          ],
+          "02c85da2ac-stl_multiset.h": [
+            7830,
+            6922,
+            6922,
+            8142
+          ],
+          "068f64de8f-c++0x_warning.h": [
+            695,
+            686,
+            617,
+            844
+          ],
+          "078211d680-alloc_traits.h": [
+            6365,
+            5843,
+            5843,
+            6546
+          ],
+          "0815771aae-ranges_uninitialized.h": [
+            3294,
+            3105,
+            3086,
+            3397
+          ],
+          "0954387bce-hash_bytes.h": [
+            1031,
+            843,
+            843,
+            1132
+          ],
+          "0e21966b9f-regex_executor.h": [
+            2887,
+            2680,
+            2680,
+            3024
+          ],
+          "1206ecd1d6-utility.h": [
+            2718,
+            2471,
+            2471,
+            2835
+          ],
+          "12f58352e4-ranges_cmp.h": [
+            1771,
+            1622,
+            1622,
+            1884
+          ],
+          "1559d95261-algorithmfwd.h": [
+            4344,
+            4107,
+            4070,
+            4552
+          ],
+          "16d490459d-stl_map.h": [
+            10842,
+            9511,
+            9511,
+            11140
+          ],
+          "1bdf315fd6-cpp_type_traits.h": [
+            3695,
+            3323,
+            3323,
+            3894
+          ],
+          "1c05c7b5eb-ptr_traits.h": [
+            2521,
+            2253,
+            2253,
+            2632
+          ],
+          "1c0b6d6086-out_ptr.h": [
+            3951,
+            3632,
+            3632,
+            4137
+          ],
+          "1c896d09b4-std_thread.h": [
+            3746,
+            3460,
+            3460,
+            3942
+          ],
+          "1d92135ce2-stl_construct.h": [
+            2611,
+            2304,
+            2304,
+            2718
+          ],
+          "1fe3a167d3-elements_of.h": [
+            1023,
+            869,
+            869,
+            1096
+          ],
+          "21064badcd-chrono_io.h": [
+            24964,
+            23406,
+            23406,
+            25221
+          ],
+          "2315fe2f7e-concept_check.h": [
+            1404,
+            1230,
+            1230,
+            1506
+          ],
+          "266b04b3ce-stringfwd.h": [
+            1113,
+            956,
+            956,
+            1193
+          ],
+          "2c211733f2-move.h": [
+            2588,
+            2337,
+            2337,
+            2703
+          ],
+          "2c81e8efb3-valarray_after.h": [
+            3701,
+            3403,
+            3363,
+            3793
+          ],
+          "2fe0f2939e-fs_dir.h": [
+            3884,
+            3520,
+            3520,
+            4068
+          ],
+          "30e688cf6a-max_size_type.h": [
+            3862,
+            3584,
+            3550,
+            4015
+          ],
+          "31113e6301-stl_pair.h": [
+            8883,
+            8045,
+            8045,
+            9132
+          ],
+          "31581517cd-invoke.h": [
+            1873,
+            1689,
+            1689,
+            1967
+          ],
+          "32a29a8607-basic_string.h": [
+            26327,
+            22771,
+            22771,
+            26620
+          ],
+          "32ab312ae1-requires_hosted.h": [
+            665,
+            663,
+            587,
+            805
+          ],
+          "339e803e5f-stl_uninitialized.h": [
+            6763,
+            5964,
+            5964,
+            7020
+          ],
+          "372a5bc655-fs_fwd.h": [
+            2484,
+            2247,
+            2247,
+            2628
+          ],
+          "380f92e966-functexcept.h": [
+            1221,
+            1049,
+            1049,
+            1327
+          ],
+          "39396773b8-codecvt.h": [
+            3894,
+            3465,
+            3465,
+            4075
+          ],
+          "39939be2c1-stl_deque.h": [
+            17108,
+            15048,
+            15048,
+            17479
+          ],
+          "3a1df723e8-shared_ptr_atomic.h": [
+            4779,
+            4506,
+            4498,
+            4979
+          ],
+          "3d053d83fd-stl_heap.h": [
+            3613,
+            3275,
+            3258,
+            3759
+          ],
+          "3eab37d215-atomic_futex.h": [
+            2893,
+            2668,
+            2668,
+            3087
+          ],
+          "405ac0a8e6-uniform_int_dist.h": [
+            3840,
+            3524,
+            3524,
+            3973
+          ],
+          "4135e21019-align.h": [
+            1648,
+            1463,
+            1463,
+            1758
+          ],
+          "41b5e32ee8-regex.h": [
+            17988,
+            15816,
+            15816,
+            18342
+          ],
+          "4216897cab-locale_facets.h": [
+            14659,
+            12370,
+            12370,
+            15047
+          ],
+          "48d4688f53-charconv.h": [
+            1624,
+            1464,
+            1464,
+            1723
+          ],
+          "4b00bf0a93-forward_list.h": [
+            10707,
+            9317,
+            9317,
+            10936
+          ],
+          "50233532a4-allocated_ptr.h": [
+            1379,
+            1222,
+            1222,
+            1477
+          ]
+        }
+      },
+      "catalogs": {
+        "timings": {
+          "best": {
+            "files": 12,
+            "input": 421176,
+            "archive": 135936,
+            "libzstd_archive": 160954,
+            "first_block_modes": "6=12",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2784206,
+                2896195,
+                3725747
+              ],
+              [
+                1564070,
+                1716700,
+                2380666
+              ],
+              [
+                371534,
+                379393,
+                454911
+              ],
+              [
+                411606,
+                413998,
+                477301
+              ]
+            ]
+          },
+          "old": {
+            "files": 12,
+            "input": 421176,
+            "archive": 161087,
+            "libzstd_archive": 160954,
+            "first_block_modes": "0=12",
+            "ordered_2_4_6_batch_ns": [
+              [
+                5105195,
+                5199459,
+                5265344
+              ],
+              [
+                1557666,
+                1572339,
+                1600974
+              ],
+              [
+                409484,
+                412258,
+                415580
+              ],
+              [
+                404974,
+                406212,
+                406970
+              ]
+            ]
+          },
+          "default": {
+            "files": 12,
+            "input": 421176,
+            "archive": 135936,
+            "libzstd_archive": 160954,
+            "first_block_modes": "6=12",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1316818,
+                1340816,
+                1344180
+              ],
+              [
+                1538773,
+                1574827,
+                1588174
+              ],
+              [
+                368330,
+                371043,
+                372386
+              ],
+              [
+                402733,
+                405333,
+                413597
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 12,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 12,
+        "default_single_block_files": 12,
+        "cli_archives": {
+          "old": 161087,
+          "default": 135936,
+          "best": 135936,
+          "zstd_cli": 160954
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "020e3d8cd7-gstreamer-1.0.mo": [
+            12047,
+            10130,
+            10130,
+            12036
+          ],
+          "07d57369be-gstreamer-1.0.mo": [
+            12227,
+            10206,
+            10206,
+            12216
+          ],
+          "0baff7eba7-gstreamer-1.0.mo": [
+            15689,
+            13205,
+            13205,
+            15678
+          ],
+          "0f59937844-gstreamer-1.0.mo": [
+            15941,
+            13426,
+            13426,
+            15930
+          ],
+          "14ed9e1714-gstreamer-1.0.mo": [
+            17875,
+            15262,
+            15262,
+            17863
+          ],
+          "16f9ec5179-gstreamer-1.0.mo": [
+            16503,
+            13955,
+            13955,
+            16491
+          ],
+          "23be60b215-gstreamer-1.0.mo": [
+            14598,
+            12450,
+            12450,
+            14587
+          ],
+          "240e200c1f-gstreamer-1.0.mo": [
+            15567,
+            13063,
+            13063,
+            15556
+          ],
+          "2f608bca8e-gstreamer-1.0.mo": [
+            15936,
+            13427,
+            13427,
+            15925
+          ],
+          "3b6fd121fe-gstreamer-1.0.mo": [
+            14439,
+            12066,
+            12066,
+            14428
+          ],
+          "56cb5b26cc-fontconfig.mo": [
+            5526,
+            4703,
+            4703,
+            5515
+          ],
+          "ef32fa2ae4-fontconfig.mo": [
+            4739,
+            4043,
+            4043,
+            4729
+          ]
+        }
+      },
+      "documents": {
+        "timings": {
+          "old": {
+            "files": 4,
+            "input": 105905,
+            "archive": 31508,
+            "libzstd_archive": 32083,
+            "first_block_modes": "3=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                656423,
+                877710,
+                1399026
+              ],
+              [
+                294630,
+                316772,
+                338322
+              ],
+              [
+                91681,
+                112788,
+                123445
+              ],
+              [
+                90059,
+                97386,
+                121552
+              ]
+            ]
+          },
+          "default": {
+            "files": 4,
+            "input": 105905,
+            "archive": 29564,
+            "libzstd_archive": 32083,
+            "first_block_modes": "7=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1348743,
+                1366287,
+                1373323
+              ],
+              [
+                264389,
+                265735,
+                266429
+              ],
+              [
+                261435,
+                263779,
+                271453
+              ],
+              [
+                88522,
+                89397,
+                90520
+              ]
+            ]
+          },
+          "best": {
+            "files": 4,
+            "input": 105905,
+            "archive": 29564,
+            "libzstd_archive": 32083,
+            "first_block_modes": "7=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                3313447,
+                3355752,
+                3492519
+              ],
+              [
+                270023,
+                274040,
+                283918
+              ],
+              [
+                259144,
+                263403,
+                268051
+              ],
+              [
+                88516,
+                88582,
+                89079
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 31508,
+          "default": 29564,
+          "best": 29564,
+          "zstd_cli": 32083
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "89685e3fb5-copyright": [
+            3128,
+            2883,
+            2883,
+            3218
+          ],
+          "98f6dd201b-copyright": [
+            9141,
+            8765,
+            8765,
+            9306
+          ],
+          "9e871f3604-copyright": [
+            2336,
+            2287,
+            2287,
+            2348
+          ],
+          "d2e9e54c19-copyright": [
+            16903,
+            15629,
+            15629,
+            17211
+          ]
+        }
+      },
+      "html": {
+        "timings": {
+          "default": {
+            "files": 4,
+            "input": 13935,
+            "archive": 4688,
+            "libzstd_archive": 5226,
+            "first_block_modes": "4=3,7=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                86308,
+                101329,
+                185715
+              ],
+              [
+                44887,
+                52722,
+                54088
+              ],
+              [
+                27152,
+                29859,
+                39752
+              ],
+              [
+                17669,
+                19036,
+                21399
+              ]
+            ]
+          },
+          "best": {
+            "files": 4,
+            "input": 13935,
+            "archive": 4617,
+            "libzstd_archive": 5226,
+            "first_block_modes": "7=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                359474,
+                373211,
+                388309
+              ],
+              [
+                44584,
+                44803,
+                45486
+              ],
+              [
+                31539,
+                31567,
+                32356
+              ],
+              [
+                17514,
+                17566,
+                17663
+              ]
+            ]
+          },
+          "old": {
+            "files": 4,
+            "input": 13935,
+            "archive": 5108,
+            "libzstd_archive": 5226,
+            "first_block_modes": "1=3,3=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                79369,
+                79763,
+                81030
+              ],
+              [
+                44620,
+                44663,
+                59877
+              ],
+              [
+                23635,
+                23714,
+                23823
+              ],
+              [
+                17381,
+                17401,
+                18096
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 5108,
+          "default": 4688,
+          "best": 4617,
+          "zstd_cli": 5226
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "3f0d7d1694-single_figure.html": [
+            581,
+            487,
+            475,
+            589
+          ],
+          "94b19f3280-ThirdPartyLibraries.html": [
+            3158,
+            2970,
+            2970,
+            3204
+          ],
+          "cd148c2a32-ipython_inline_figure.html": [
+            634,
+            577,
+            556,
+            679
+          ],
+          "e2f8d204b8-all_figures.html": [
+            735,
+            654,
+            616,
+            754
+          ]
+        }
+      },
+      "js-css": {
+        "timings": {
+          "best": {
+            "files": 5,
+            "input": 1143411,
+            "archive": 299742,
+            "libzstd_archive": 313665,
+            "first_block_modes": "1=3,7=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                33254014,
+                33680436,
+                44868853
+              ],
+              [
+                4308226,
+                4352182,
+                5519286
+              ],
+              [
+                3698533,
+                3924268,
+                4448794
+              ],
+              [
+                1012194,
+                1032140,
+                1175177
+              ]
+            ]
+          },
+          "old": {
+            "files": 5,
+            "input": 1143411,
+            "archive": 314212,
+            "libzstd_archive": 313665,
+            "first_block_modes": "3=5",
+            "ordered_2_4_6_batch_ns": [
+              [
+                6138087,
+                6159935,
+                6199088
+              ],
+              [
+                4270842,
+                4303791,
+                4323150
+              ],
+              [
+                1006212,
+                1014022,
+                1032416
+              ],
+              [
+                1001671,
+                1016144,
+                1023509
+              ]
+            ]
+          },
+          "default": {
+            "files": 5,
+            "input": 1143411,
+            "archive": 310652,
+            "libzstd_archive": 313665,
+            "first_block_modes": "0=2,7=3",
+            "ordered_2_4_6_batch_ns": [
+              [
+                6751840,
+                6815684,
+                6928096
+              ],
+              [
+                4235375,
+                4255361,
+                4368295
+              ],
+              [
+                1692834,
+                1718589,
+                2397917
+              ],
+              [
+                996571,
+                1025672,
+                1480533
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 5,
+          "stock_read_candidate": 2
+        },
+        "best_single_block_files": 5,
+        "default_single_block_files": 5,
+        "cli_archives": {
+          "old": 314212,
+          "default": 310652,
+          "best": 299742,
+          "zstd_cli": 313665
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "25fa4b6814-leaflet.esm.js": [
+            109759,
+            109655,
+            104358,
+            109655
+          ],
+          "4dd2050fc8-leaflet.js": [
+            112797,
+            112522,
+            106933,
+            112522
+          ],
+          "5079639460-leaflet.css": [
+            2878,
+            2798,
+            2774,
+            2884
+          ],
+          "cb0c3b52fc-leaflet.esm.min.js": [
+            45093,
+            43535,
+            43535,
+            44997
+          ],
+          "e64852b741-leaflet.min.js": [
+            43685,
+            42142,
+            42142,
+            43607
+          ]
+        }
+      },
+      "large-web-js": {
+        "timings": {
+          "old": {
+            "files": 1,
+            "input": 8622407,
+            "archive": 2036830,
+            "libzstd_archive": 1983514,
+            "first_block_modes": "3=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                40489160,
+                40904336,
+                56404234
+              ],
+              [
+                30070027,
+                31768537,
+                40533887
+              ],
+              [
+                7629295,
+                7700009,
+                12667034
+              ],
+              [
+                7003560,
+                7058212,
+                9070607
+              ]
+            ]
+          },
+          "default": {
+            "files": 1,
+            "input": 8622407,
+            "archive": 1993392,
+            "libzstd_archive": 1983514,
+            "first_block_modes": "0=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                32075790,
+                32150283,
+                32434200
+              ],
+              [
+                30390210,
+                30502078,
+                30694228
+              ],
+              [
+                7911346,
+                7937700,
+                8007931
+              ],
+              [
+                7007784,
+                7027616,
+                7263261
+              ]
+            ]
+          },
+          "best": {
+            "files": 1,
+            "input": 8622407,
+            "archive": 1876710,
+            "libzstd_archive": 1983514,
+            "first_block_modes": "1=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                207378006,
+                208801671,
+                213420710
+              ],
+              [
+                30677223,
+                31099649,
+                31492671
+              ],
+              [
+                25063264,
+                26797436,
+                27039140
+              ],
+              [
+                7041092,
+                7080448,
+                7215845
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 1,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 1,
+        "default_single_block_files": 0,
+        "cli_archives": {
+          "old": 2036830,
+          "default": 1993392,
+          "best": 1876710,
+          "zstd_cli": 1994466
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "41b7f815b8-plotly.js": [
+            2036830,
+            1993392,
+            1876710,
+            1994466
+          ]
+        }
+      },
+      "man-gzip": {
+        "timings": {
+          "default": {
+            "files": 4,
+            "input": 82160,
+            "archive": 82216,
+            "libzstd_archive": 82216,
+            "first_block_modes": "0=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                39310,
+                39343,
+                39702
+              ],
+              [
+                39036,
+                39069,
+                39124
+              ],
+              [
+                7739,
+                7746,
+                7760
+              ],
+              [
+                7652,
+                7665,
+                7692
+              ]
+            ]
+          },
+          "best": {
+            "files": 4,
+            "input": 82160,
+            "archive": 82216,
+            "libzstd_archive": 82216,
+            "first_block_modes": "0=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                39560,
+                39630,
+                39639
+              ],
+              [
+                39448,
+                39514,
+                39608
+              ],
+              [
+                7726,
+                7730,
+                7737
+              ],
+              [
+                7642,
+                7651,
+                7652
+              ]
+            ]
+          },
+          "old": {
+            "files": 4,
+            "input": 82160,
+            "archive": 82260,
+            "libzstd_archive": 82216,
+            "first_block_modes": "0=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                42189,
+                42257,
+                46149
+              ],
+              [
+                39783,
+                39882,
+                40268
+              ],
+              [
+                7746,
+                7758,
+                8386
+              ],
+              [
+                7673,
+                7696,
+                8309
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 8
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 82260,
+          "default": 82216,
+          "best": 82216,
+          "zstd_cli": 82216
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "12fae01908-rmiregistry.1.gz": [
+            1606,
+            1596,
+            1596,
+            1596
+          ],
+          "6272c88f44-keytool.1.gz": [
+            26218,
+            26206,
+            26206,
+            26206
+          ],
+          "a4d0d2cf3c-jpackage.1.gz": [
+            5781,
+            5771,
+            5771,
+            5771
+          ],
+          "fd4e64cf8a-java.1.gz": [
+            48655,
+            48643,
+            48643,
+            48643
+          ]
+        }
+      },
+      "man-roff": {
+        "timings": {
+          "best": {
+            "files": 4,
+            "input": 324485,
+            "archive": 77631,
+            "libzstd_archive": 86971,
+            "first_block_modes": "1=1,7=3",
+            "ordered_2_4_6_batch_ns": [
+              [
+                8703201,
+                10411128,
+                11461772
+              ],
+              [
+                1119177,
+                1249122,
+                1360915
+              ],
+              [
+                916751,
+                1124698,
+                1234975
+              ],
+              [
+                258706,
+                259093,
+                312914
+              ]
+            ]
+          },
+          "old": {
+            "files": 4,
+            "input": 324485,
+            "archive": 85777,
+            "libzstd_archive": 86971,
+            "first_block_modes": "3=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1661169,
+                1665005,
+                1746840
+              ],
+              [
+                1121792,
+                1126619,
+                1161901
+              ],
+              [
+                267666,
+                271796,
+                295295
+              ],
+              [
+                259791,
+                261940,
+                265039
+              ]
+            ]
+          },
+          "default": {
+            "files": 4,
+            "input": 324485,
+            "archive": 77633,
+            "libzstd_archive": 86971,
+            "first_block_modes": "7=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                3766627,
+                3788623,
+                3824517
+              ],
+              [
+                1123132,
+                1133469,
+                1171617
+              ],
+              [
+                885544,
+                894962,
+                1018096
+              ],
+              [
+                259458,
+                261100,
+                298717
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 85777,
+          "default": 77633,
+          "best": 77631,
+          "zstd_cli": 86971
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "12fae01908-rmiregistry.1": [
+            1533,
+            1350,
+            1350,
+            1635
+          ],
+          "6272c88f44-keytool.1": [
+            27459,
+            24707,
+            24707,
+            27923
+          ],
+          "a4d0d2cf3c-jpackage.1": [
+            5955,
+            5556,
+            5554,
+            6133
+          ],
+          "fd4e64cf8a-java.1": [
+            50830,
+            46020,
+            46020,
+            51280
+          ]
+        }
+      },
+      "media": {
+        "timings": {
+          "old": {
+            "files": 11,
+            "input": 647336,
+            "archive": 435464,
+            "libzstd_archive": 435342,
+            "first_block_modes": "0=11",
+            "ordered_2_4_6_batch_ns": [
+              [
+                3763811,
+                4069060,
+                4966614
+              ],
+              [
+                1288781,
+                1823167,
+                1906035
+              ],
+              [
+                142072,
+                144048,
+                211772
+              ],
+              [
+                139932,
+                145478,
+                208619
+              ]
+            ]
+          },
+          "default": {
+            "files": 11,
+            "input": 647336,
+            "archive": 435342,
+            "libzstd_archive": 435342,
+            "first_block_modes": "0=11",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1306473,
+                1333300,
+                1780045
+              ],
+              [
+                1277214,
+                1310089,
+                1748871
+              ],
+              [
+                145624,
+                155698,
+                200566
+              ],
+              [
+                141849,
+                146835,
+                163837
+              ]
+            ]
+          },
+          "best": {
+            "files": 11,
+            "input": 647336,
+            "archive": 435342,
+            "libzstd_archive": 435342,
+            "first_block_modes": "0=11",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1265368,
+                1276462,
+                1299196
+              ],
+              [
+                1223865,
+                1276488,
+                1289424
+              ],
+              [
+                142643,
+                143106,
+                145704
+              ],
+              [
+                139912,
+                141998,
+                144590
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 11,
+          "stock_read_candidate": 22
+        },
+        "best_single_block_files": 11,
+        "default_single_block_files": 11,
+        "cli_archives": {
+          "old": 435464,
+          "default": 435342,
+          "best": 435342,
+          "zstd_cli": 434488
+        },
+        "new_size_above_stock_files": {
+          "default": 2,
+          "best": 2
+        },
+        "file_archive_bytes": {
+          "1c17f1d1d7-marker-icon.png": [
+            1490,
+            1480,
+            1480,
+            1480
+          ],
+          "32a2a696e7-tstlmqx.pdf": [
+            176506,
+            176494,
+            176494,
+            176035
+          ],
+          "3e19bc5269-marker-icon-2x.png": [
+            2488,
+            2478,
+            2478,
+            2478
+          ],
+          "4047e2f8c6-marker-shadow.png": [
+            642,
+            632,
+            632,
+            632
+          ],
+          "40b2339c30-tstlmot4.pdf": [
+            177207,
+            177195,
+            177195,
+            176800
+          ],
+          "505de58479-layers-2x.png": [
+            1283,
+            1273,
+            1273,
+            1273
+          ],
+          "5af5706c17-test-word-latinmodern_math.pdf": [
+            20942,
+            20930,
+            20930,
+            20930
+          ],
+          "771298c6fa-test-context-latinmodern_math.pdf": [
+            16433,
+            16421,
+            16421,
+            16421
+          ],
+          "7a3179349b-test-xelatex-latinmodern_math.pdf": [
+            17140,
+            17128,
+            17128,
+            17128
+          ],
+          "a12267c0a0-layers.png": [
+            720,
+            710,
+            710,
+            710
+          ],
+          "e3acc6f14f-test-lualatex-latinmodern_math.pdf": [
+            20613,
+            20601,
+            20601,
+            20601
+          ]
+        }
+      },
+      "office-docs": {
+        "timings": {
+          "default": {
+            "files": 4,
+            "input": 1012148,
+            "archive": 798222,
+            "libzstd_archive": 798222,
+            "first_block_modes": "0=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2471045,
+                2480148,
+                2658085
+              ],
+              [
+                2448314,
+                2474622,
+                2532515
+              ],
+              [
+                216532,
+                217899,
+                230340
+              ],
+              [
+                215273,
+                217436,
+                218397
+              ]
+            ]
+          },
+          "best": {
+            "files": 4,
+            "input": 1012148,
+            "archive": 798222,
+            "libzstd_archive": 798222,
+            "first_block_modes": "0=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2461045,
+                2591630,
+                3242190
+              ],
+              [
+                2410145,
+                2646559,
+                2794147
+              ],
+              [
+                217040,
+                217729,
+                238317
+              ],
+              [
+                218409,
+                219489,
+                287040
+              ]
+            ]
+          },
+          "old": {
+            "files": 4,
+            "input": 1012148,
+            "archive": 798270,
+            "libzstd_archive": 798222,
+            "first_block_modes": "0=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                5127813,
+                5143618,
+                5209233
+              ],
+              [
+                2386600,
+                2392106,
+                2432151
+              ],
+              [
+                216604,
+                217094,
+                218071
+              ],
+              [
+                214242,
+                214359,
+                216000
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 8
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 798270,
+          "default": 798222,
+          "best": 798222,
+          "zstd_cli": 797628
+        },
+        "new_size_above_stock_files": {
+          "default": 2,
+          "best": 2
+        },
+        "file_archive_bytes": {
+          "602eccc206-default.docx": [
+            35906,
+            35894,
+            35894,
+            35894
+          ],
+          "8231e222b0-STM32H7XX_M_schematics.pdf": [
+            476487,
+            476475,
+            476475,
+            476079
+          ],
+          "e703a73e51-idxexample.odt": [
+            18737,
+            18725,
+            18725,
+            18725
+          ],
+          "f204096d22-Hardware_Cartridge_Design_Guide.pdf": [
+            267140,
+            267128,
+            267128,
+            266930
+          ]
+        }
+      },
+      "python": {
+        "timings": {
+          "best": {
+            "files": 39,
+            "input": 491055,
+            "archive": 135494,
+            "libzstd_archive": 151467,
+            "first_block_modes": "1=1,7=38",
+            "ordered_2_4_6_batch_ns": [
+              [
+                15092406,
+                15194735,
+                15966218
+              ],
+              [
+                1846100,
+                1849023,
+                1854893
+              ],
+              [
+                1559862,
+                1572001,
+                1577335
+              ],
+              [
+                495493,
+                500702,
+                501432
+              ]
+            ]
+          },
+          "old": {
+            "files": 39,
+            "input": 491055,
+            "archive": 148040,
+            "libzstd_archive": 151467,
+            "first_block_modes": "1=10,3=29",
+            "ordered_2_4_6_batch_ns": [
+              [
+                3316635,
+                4124531,
+                4458890
+              ],
+              [
+                1851998,
+                2185712,
+                2596665
+              ],
+              [
+                616614,
+                671599,
+                910926
+              ],
+              [
+                506080,
+                618975,
+                755126
+              ]
+            ]
+          },
+          "default": {
+            "files": 39,
+            "input": 491055,
+            "archive": 135908,
+            "libzstd_archive": 151467,
+            "first_block_modes": "4=10,7=29",
+            "ordered_2_4_6_batch_ns": [
+              [
+                5856799,
+                5928651,
+                6346748
+              ],
+              [
+                1869000,
+                1890838,
+                1929116
+              ],
+              [
+                1579726,
+                1595039,
+                1700631
+              ],
+              [
+                496180,
+                503568,
+                506700
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 39,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 39,
+        "default_single_block_files": 39,
+        "cli_archives": {
+          "old": 148040,
+          "default": 135908,
+          "best": 135494,
+          "zstd_cli": 151467
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "026d441601-Hdf5StubImagePlugin.py": [
+            727,
+            706,
+            661,
+            780
+          ],
+          "03dc0d9005-QoiImagePlugin.py": [
+            1352,
+            1244,
+            1244,
+            1372
+          ],
+          "06e55b752a-ImageFile.py": [
+            7599,
+            6771,
+            6771,
+            7854
+          ],
+          "0abcc6e6e2-TgaImagePlugin.py": [
+            2195,
+            2042,
+            2042,
+            2208
+          ],
+          "0f241653fe-IptcImagePlugin.py": [
+            2490,
+            2296,
+            2296,
+            2533
+          ],
+          "110cb44a23-McIdasImagePlugin.py": [
+            831,
+            830,
+            769,
+            903
+          ],
+          "119110a6ae-MpegImagePlugin.py": [
+            890,
+            762,
+            762,
+            896
+          ],
+          "169521d6de-PixarImagePlugin.py": [
+            843,
+            819,
+            780,
+            900
+          ],
+          "234f26000e-GbrImagePlugin.py": [
+            1164,
+            1057,
+            1057,
+            1214
+          ],
+          "2510b584b5-GifImagePlugin.py": [
+            10920,
+            9785,
+            9785,
+            11169
+          ],
+          "25f4fca9d8-ImageDraw2.py": [
+            1910,
+            1748,
+            1748,
+            1954
+          ],
+          "2614250cbe-GimpPaletteFile.py": [
+            653,
+            647,
+            597,
+            727
+          ],
+          "2d5c58ba18-Image.py": [
+            39063,
+            34527,
+            34527,
+            39481
+          ],
+          "33c8600d80-ImageEnhance.py": [
+            1202,
+            1066,
+            1066,
+            1227
+          ],
+          "37503c5f85-FtexImagePlugin.py": [
+            1456,
+            1311,
+            1311,
+            1498
+          ],
+          "37b5785e92-SpiderImagePlugin.py": [
+            3472,
+            3219,
+            3219,
+            3585
+          ],
+          "3a263dd7fc-ImageChops.py": [
+            1675,
+            1531,
+            1531,
+            1731
+          ],
+          "3cfece6748-PcfFontFile.py": [
+            2263,
+            2115,
+            2115,
+            2286
+          ],
+          "3f54ba3780-ImageTransform.py": [
+            1351,
+            1238,
+            1238,
+            1427
+          ],
+          "4112d7f6cd-BlpImagePlugin.py": [
+            4284,
+            3940,
+            3940,
+            4382
+          ],
+          "423a8a0739-__main__.py": [
+            106,
+            92,
+            88,
+            110
+          ],
+          "4669d81014-report.py": [
+            81,
+            72,
+            66,
+            89
+          ],
+          "48d07a0c60-TarIO.py": [
+            646,
+            636,
+            587,
+            722
+          ],
+          "4b45f4e4cc-ImageMode.py": [
+            978,
+            894,
+            894,
+            986
+          ],
+          "4bef26bbca-DcxImagePlugin.py": [
+            897,
+            895,
+            836,
+            990
+          ],
+          "4c12e6fb19-FpxImagePlugin.py": [
+            2510,
+            2304,
+            2304,
+            2594
+          ],
+          "4f67fd0f96-MpoImagePlugin.py": [
+            2339,
+            2172,
+            2172,
+            2411
+          ],
+          "50176a0579-GdImageFile.py": [
+            1251,
+            1082,
+            1082,
+            1317
+          ],
+          "55ed8f8a72-BmpImagePlugin.py": [
+            5488,
+            5057,
+            5057,
+            5635
+          ],
+          "560a1cf905-ImageOps.py": [
+            6704,
+            6205,
+            6205,
+            6899
+          ],
+          "59f55fdc6d-GimpGradientFile.py": [
+            1457,
+            1351,
+            1351,
+            1474
+          ],
+          "5c79a43208-ImageFilter.py": [
+            5169,
+            4708,
+            4708,
+            5328
+          ],
+          "5eb381758b-MspImagePlugin.py": [
+            2318,
+            2114,
+            2114,
+            2387
+          ],
+          "5ec05779bf-ImageColor.py": [
+            3165,
+            3111,
+            3087,
+            3193
+          ],
+          "60ddd17f71-ImageGrab.py": [
+            2013,
+            1843,
+            1843,
+            2063
+          ],
+          "614d3ae324-PaletteFile.py": [
+            585,
+            573,
+            525,
+            647
+          ],
+          "626d3e1920-ImageFont.py": [
+            22510,
+            21815,
+            21815,
+            22908
+          ],
+          "632a35081d-_typing.py": [
+            585,
+            560,
+            531,
+            617
+          ],
+          "657456bd0d-PdfImagePlugin.py": [
+            2898,
+            2770,
+            2770,
+            2970
+          ]
+        }
+      },
+      "rust": {
+        "timings": {
+          "old": {
+            "files": 2,
+            "input": 95258,
+            "archive": 15614,
+            "libzstd_archive": 15894,
+            "first_block_modes": "3=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                318328,
+                321146,
+                340665
+              ],
+              [
+                135983,
+                138964,
+                139818
+              ],
+              [
+                52842,
+                52959,
+                53862
+              ],
+              [
+                50360,
+                50523,
+                51170
+              ]
+            ]
+          },
+          "default": {
+            "files": 2,
+            "input": 95258,
+            "archive": 13825,
+            "libzstd_archive": 15894,
+            "first_block_modes": "7=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                797372,
+                807329,
+                813973
+              ],
+              [
+                133013,
+                134184,
+                135994
+              ],
+              [
+                167305,
+                167842,
+                169406
+              ],
+              [
+                49992,
+                51591,
+                51978
+              ]
+            ]
+          },
+          "best": {
+            "files": 2,
+            "input": 95258,
+            "archive": 13825,
+            "libzstd_archive": 15894,
+            "first_block_modes": "7=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1872060,
+                1909144,
+                1943147
+              ],
+              [
+                130265,
+                131821,
+                134513
+              ],
+              [
+                164526,
+                166971,
+                183534
+              ],
+              [
+                49547,
+                49754,
+                51469
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 2,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 2,
+        "default_single_block_files": 2,
+        "cli_archives": {
+          "old": 15614,
+          "default": 13825,
+          "best": 13825,
+          "zstd_cli": 15894
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "2f5d71135b-serde-json-ser.rs": [
+            7575,
+            6705,
+            6705,
+            7646
+          ],
+          "68c599c981-serde-json-read.rs": [
+            8039,
+            7120,
+            7120,
+            8248
+          ]
+        }
+      },
+      "short-files": {
+        "timings": {
+          "default": {
+            "files": 19,
+            "input": 26898,
+            "archive": 11300,
+            "libzstd_archive": 12969,
+            "first_block_modes": "4=19",
+            "ordered_2_4_6_batch_ns": [
+              [
+                109710,
+                110164,
+                120098
+              ],
+              [
+                123776,
+                124386,
+                131866
+              ],
+              [
+                37035,
+                37615,
+                43422
+              ],
+              [
+                51087,
+                51921,
+                52535
+              ]
+            ]
+          },
+          "best": {
+            "files": 19,
+            "input": 26898,
+            "archive": 10519,
+            "libzstd_archive": 12969,
+            "first_block_modes": "4=1,7=18",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1065561,
+                1082937,
+                1105426
+              ],
+              [
+                123098,
+                125139,
+                125702
+              ],
+              [
+                71231,
+                71367,
+                71486
+              ],
+              [
+                50603,
+                50861,
+                54553
+              ]
+            ]
+          },
+          "old": {
+            "files": 19,
+            "input": 26898,
+            "archive": 11704,
+            "libzstd_archive": 12969,
+            "first_block_modes": "1=19",
+            "ordered_2_4_6_batch_ns": [
+              [
+                271851,
+                273762,
+                279703
+              ],
+              [
+                123648,
+                124303,
+                140168
+              ],
+              [
+                75993,
+                76019,
+                79646
+              ],
+              [
+                49681,
+                50162,
+                50631
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 19,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 19,
+        "default_single_block_files": 19,
+        "cli_archives": {
+          "old": 11704,
+          "default": 11300,
+          "best": 10519,
+          "zstd_cli": 12969
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "36fe391191-libtool.lang": [
+            786,
+            756,
+            708,
+            870
+          ],
+          "478dae68b5-chdr.lang": [
+            817,
+            803,
+            737,
+            959
+          ],
+          "5169e8464a-dpatch.lang": [
+            728,
+            692,
+            646,
+            811
+          ],
+          "5898c71252-exception_defines.h": [
+            727,
+            731,
+            649,
+            883
+          ],
+          "7bf632a4e4-_deprecate.py": [
+            696,
+            699,
+            651,
+            762
+          ],
+          "82e996405d-cxxabi_forced.h": [
+            845,
+            853,
+            765,
+            993
+          ],
+          "83d0e6da5c-CurImagePlugin.py": [
+            767,
+            746,
+            704,
+            805
+          ],
+          "8b07b54ffd-GribStubImagePlugin.py": [
+            718,
+            690,
+            652,
+            765
+          ],
+          "a2f0e0e0ad-PcdImagePlugin.py": [
+            757,
+            726,
+            690,
+            797
+          ],
+          "a72d08fe1d-_version.py": [
+            80,
+            69,
+            66,
+            90
+          ],
+          "b88ed73011-_tkinter_finder.py": [
+            298,
+            275,
+            261,
+            341
+          ],
+          "c3ae07c71a-cpphdr.lang": [
+            681,
+            648,
+            603,
+            775
+          ],
+          "c5785131b4-erb-js.lang": [
+            620,
+            588,
+            539,
+            701
+          ],
+          "c81ba88fa7-BufrStubImagePlugin.py": [
+            720,
+            695,
+            654,
+            767
+          ],
+          "cd3f4bbb14-_util.py": [
+            335,
+            325,
+            291,
+            373
+          ],
+          "d655f12278-gradle.lang": [
+            770,
+            724,
+            687,
+            859
+          ],
+          "da48e1bd97-org.kde.kded6.xml": [
+            391,
+            324,
+            324,
+            374
+          ],
+          "db17f108c5-ImagePath.py": [
+            247,
+            224,
+            211,
+            282
+          ],
+          "de7ce8ad9d-__init__.py": [
+            721,
+            732,
+            681,
+            762
+          ]
+        },
+        "fresh_process": {
+          "file": "36fe391191-libtool.lang",
+          "bytes": 1876,
+          "rounds": 15,
+          "median_compress_decompress_ms": {
+            "old": [
+              0.916,
+              0.854
+            ],
+            "default": [
+              1.148,
+              0.862
+            ],
+            "best": [
+              1.534,
+              0.869
+            ],
+            "zstd_cli": [
+              1.053,
+              1.03
+            ]
+          }
+        }
+      },
+      "structured-text": {
+        "timings": {
+          "best": {
+            "files": 25,
+            "input": 220686,
+            "archive": 50690,
+            "libzstd_archive": 57848,
+            "first_block_modes": "1=9,7=16",
+            "ordered_2_4_6_batch_ns": [
+              [
+                5361282,
+                5379003,
+                5480314
+              ],
+              [
+                622943,
+                624360,
+                628457
+              ],
+              [
+                574797,
+                575859,
+                578595
+              ],
+              [
+                184487,
+                185498,
+                190576
+              ]
+            ]
+          },
+          "old": {
+            "files": 25,
+            "input": 220686,
+            "archive": 55640,
+            "libzstd_archive": 57848,
+            "first_block_modes": "1=3,3=22",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1040771,
+                1043019,
+                1094067
+              ],
+              [
+                618899,
+                622883,
+                640462
+              ],
+              [
+                190294,
+                190400,
+                190670
+              ],
+              [
+                182494,
+                182695,
+                182914
+              ]
+            ]
+          },
+          "default": {
+            "files": 25,
+            "input": 220686,
+            "archive": 51061,
+            "libzstd_archive": 57848,
+            "first_block_modes": "4=3,7=22",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2054730,
+                2061839,
+                2070359
+              ],
+              [
+                630319,
+                642461,
+                644801
+              ],
+              [
+                537712,
+                538550,
+                583684
+              ],
+              [
+                182588,
+                183056,
+                183537
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 25,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 25,
+        "default_single_block_files": 25,
+        "cli_archives": {
+          "old": 55640,
+          "default": 51061,
+          "best": 50690,
+          "zstd_cli": 57848
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "0180a20ba8-haskell-literate.lang": [
+            757,
+            738,
+            672,
+            859
+          ],
+          "041aa6a379-opal.lang": [
+            2386,
+            2280,
+            2216,
+            2431
+          ],
+          "04e2c083a1-ocaml.lang": [
+            2609,
+            2487,
+            2462,
+            2670
+          ],
+          "07ec1edfdb-cg.lang": [
+            2463,
+            2263,
+            2263,
+            2540
+          ],
+          "0898d4f37b-gap.lang": [
+            984,
+            857,
+            857,
+            1033
+          ],
+          "0a9ae943b3-gdb-log.lang": [
+            2182,
+            1983,
+            1983,
+            2276
+          ],
+          "0bb0219efa-csharp.lang": [
+            2436,
+            2264,
+            2249,
+            2535
+          ],
+          "0bfb1d71eb-idl.lang": [
+            1331,
+            1192,
+            1192,
+            1405
+          ],
+          "118b0510c2-netrexx.lang": [
+            2365,
+            2265,
+            2241,
+            2452
+          ],
+          "14f2c731a4-json.lang": [
+            1547,
+            1353,
+            1353,
+            1617
+          ],
+          "16c4c5304a-meson.lang": [
+            1773,
+            1619,
+            1619,
+            1874
+          ],
+          "17238b6c9c-dot.lang": [
+            1289,
+            1139,
+            1139,
+            1323
+          ],
+          "189ce0df40-julia.lang": [
+            3887,
+            3728,
+            3706,
+            3985
+          ],
+          "1add2a9213-ftl.lang": [
+            1129,
+            953,
+            953,
+            1184
+          ],
+          "20488af267-llvm.lang": [
+            2501,
+            2431,
+            2417,
+            2594
+          ],
+          "20e12f2350-javascript.lang": [
+            7599,
+            6641,
+            6641,
+            7753
+          ],
+          "21955f22df-pkgconfig.lang": [
+            811,
+            794,
+            731,
+            912
+          ],
+          "2496576ee8-nsis.lang": [
+            1040,
+            900,
+            900,
+            1095
+          ],
+          "249c059064-d.lang": [
+            2175,
+            2011,
+            2008,
+            2265
+          ],
+          "24e04fa103-def.lang": [
+            3992,
+            3678,
+            3678,
+            4180
+          ],
+          "2550978c35-erlang.lang": [
+            1936,
+            1807,
+            1802,
+            2014
+          ],
+          "2553322df4-eiffel.lang": [
+            1919,
+            1767,
+            1767,
+            2054
+          ],
+          "25794527b6-vbnet.lang": [
+            1810,
+            1671,
+            1658,
+            1874
+          ],
+          "26df5e936e-markdown.lang": [
+            4080,
+            3624,
+            3624,
+            4194
+          ],
+          "278049000f-erb-html.lang": [
+            639,
+            616,
+            559,
+            729
+          ]
+        }
+      },
+      "web": {
+        "timings": {
+          "old": {
+            "files": 4,
+            "input": 650559,
+            "archive": 131061,
+            "libzstd_archive": 132370,
+            "first_block_modes": "3=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2704943,
+                2726055,
+                2836349
+              ],
+              [
+                1705349,
+                1718554,
+                1723853
+              ],
+              [
+                461007,
+                465049,
+                468067
+              ],
+              [
+                428840,
+                430245,
+                436767
+              ]
+            ]
+          },
+          "default": {
+            "files": 4,
+            "input": 650559,
+            "archive": 125993,
+            "libzstd_archive": 132370,
+            "first_block_modes": "0=1,7=3",
+            "ordered_2_4_6_batch_ns": [
+              [
+                3396142,
+                3426057,
+                3460235
+              ],
+              [
+                1699669,
+                1714731,
+                1725427
+              ],
+              [
+                845147,
+                847869,
+                850456
+              ],
+              [
+                427133,
+                429887,
+                431988
+              ]
+            ]
+          },
+          "best": {
+            "files": 4,
+            "input": 650559,
+            "archive": 117172,
+            "libzstd_archive": 132370,
+            "first_block_modes": "1=1,7=3",
+            "ordered_2_4_6_batch_ns": [
+              [
+                13864364,
+                13914340,
+                14061877
+              ],
+              [
+                1716457,
+                1732332,
+                1748886
+              ],
+              [
+                1632523,
+                1638215,
+                1644155
+              ],
+              [
+                426481,
+                428312,
+                429810
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 1
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 131061,
+          "default": 125993,
+          "best": 117172,
+          "zstd_cli": 132370
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "0d12407612-python-zh.html": [
+            18075,
+            15753,
+            15753,
+            18347
+          ],
+          "2425001171-go-memory.html": [
+            12856,
+            11514,
+            11514,
+            13255
+          ],
+          "31239d03b7-rfc9113.html": [
+            84292,
+            84526,
+            75705,
+            84526
+          ],
+          "b1e4b56d02-curl-tutorial.html": [
+            15838,
+            14200,
+            14200,
+            16242
+          ]
+        },
+        "fresh_process": {
+          "file": "0d12407612-python-zh.html",
+          "bytes": 100818,
+          "rounds": 15,
+          "median_compress_decompress_ms": {
+            "old": [
+              1.644,
+              1.018
+            ],
+            "default": [
+              2.0,
+              1.179
+            ],
+            "best": [
+              3.592,
+              1.19
+            ],
+            "zstd_cli": [
+              1.411,
+              1.17
+            ]
+          }
+        }
+      }
+    },
+    "tune": {
+      "binaries": {
+        "timings": {
+          "default": {
+            "files": 4,
+            "input": 1750904,
+            "archive": 813019,
+            "libzstd_archive": 873988,
+            "first_block_modes": "5=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                8889758,
+                8903829,
+                8947982
+              ],
+              [
+                8140338,
+                8179877,
+                8205153
+              ],
+              [
+                2286474,
+                2300636,
+                2301364
+              ],
+              [
+                1886259,
+                1887198,
+                1904645
+              ]
+            ]
+          },
+          "best": {
+            "files": 4,
+            "input": 1750904,
+            "archive": 813019,
+            "libzstd_archive": 873988,
+            "first_block_modes": "5=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                17172364,
+                17263866,
+                17992975
+              ],
+              [
+                8083016,
+                8096156,
+                8147506
+              ],
+              [
+                2296692,
+                2303673,
+                2379814
+              ],
+              [
+                1887526,
+                1901446,
+                1915520
+              ]
+            ]
+          },
+          "old": {
+            "files": 4,
+            "input": 1750904,
+            "archive": 877023,
+            "libzstd_archive": 873988,
+            "first_block_modes": "0=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                21588047,
+                21611412,
+                21707968
+              ],
+              [
+                8064936,
+                8106722,
+                8144624
+              ],
+              [
+                1941490,
+                1949790,
+                1983432
+              ],
+              [
+                1897372,
+                1900490,
+                1906062
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 877023,
+          "default": 813019,
+          "best": 813019,
+          "zstd_cli": 875580
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "16aa0aeda9-bzip2": [
+            15494,
+            14600,
+            14600,
+            15483
+          ],
+          "3b3a92f7e6-gpg": [
+            622141,
+            570881,
+            570881,
+            620929
+          ],
+          "d4dcc40f58-make": [
+            140102,
+            132392,
+            132392,
+            139894
+          ],
+          "deb50414cb-grep": [
+            99286,
+            95146,
+            95146,
+            99274
+          ]
+        }
+      },
+      "c-headers": {
+        "timings": {
+          "best": {
+            "files": 44,
+            "input": 673760,
+            "archive": 131975,
+            "libzstd_archive": 143479,
+            "first_block_modes": "1=9,7=35",
+            "ordered_2_4_6_batch_ns": [
+              [
+                15877668,
+                16010875,
+                16208562
+              ],
+              [
+                1811698,
+                1833934,
+                1930832
+              ],
+              [
+                1579573,
+                1619925,
+                1645064
+              ],
+              [
+                537716,
+                551013,
+                574180
+              ]
+            ]
+          },
+          "old": {
+            "files": 44,
+            "input": 673760,
+            "archive": 140962,
+            "libzstd_archive": 143479,
+            "first_block_modes": "1=19,3=25",
+            "ordered_2_4_6_batch_ns": [
+              [
+                3385776,
+                3454372,
+                3647281
+              ],
+              [
+                1788468,
+                1817259,
+                1863005
+              ],
+              [
+                652098,
+                658374,
+                683973
+              ],
+              [
+                530466,
+                531933,
+                544143
+              ]
+            ]
+          },
+          "default": {
+            "files": 44,
+            "input": 673760,
+            "archive": 133644,
+            "libzstd_archive": 143479,
+            "first_block_modes": "4=26,7=18",
+            "ordered_2_4_6_batch_ns": [
+              [
+                6303438,
+                6438426,
+                6706956
+              ],
+              [
+                1817764,
+                1833207,
+                1891327
+              ],
+              [
+                1357269,
+                1370791,
+                1403230
+              ],
+              [
+                533239,
+                549422,
+                562782
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 44,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 44,
+        "default_single_block_files": 44,
+        "cli_archives": {
+          "old": 140962,
+          "default": 133644,
+          "best": 131975,
+          "zstd_cli": 143479
+        },
+        "new_size_above_stock_files": {
+          "default": 1,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "00763018f3-cast.h": [
+            674,
+            618,
+            580,
+            715
+          ],
+          "013ece0722-srp.h": [
+            2767,
+            2736,
+            2676,
+            2766
+          ],
+          "014d8e0905-rsa.h": [
+            4997,
+            4624,
+            4624,
+            5165
+          ],
+          "02df73d05a-md2.h": [
+            619,
+            551,
+            519,
+            649
+          ],
+          "02f72eedbf-safestack.h": [
+            3512,
+            3144,
+            3078,
+            3530
+          ],
+          "04d4b48e88-rc2.h": [
+            640,
+            603,
+            550,
+            683
+          ],
+          "068f1ce3a2-dh.h": [
+            3293,
+            3081,
+            3081,
+            3344
+          ],
+          "08cd622cfe-self_test.h": [
+            1288,
+            1298,
+            1243,
+            1298
+          ],
+          "09c122c24b-tserr.h": [
+            926,
+            907,
+            896,
+            943
+          ],
+          "0a5c678ccd-comp.h": [
+            1250,
+            1111,
+            1111,
+            1233
+          ],
+          "0e230e7417-x509v3.h": [
+            18712,
+            17879,
+            17879,
+            19038
+          ],
+          "1012f78e26-ts.h": [
+            5047,
+            4676,
+            4676,
+            5189
+          ],
+          "11606b4eab-evperr.h": [
+            1854,
+            1847,
+            1822,
+            1872
+          ],
+          "11afa9394b-objectserr.h": [
+            426,
+            366,
+            358,
+            444
+          ],
+          "17f4bd0050-core_object.h": [
+            525,
+            479,
+            436,
+            599
+          ],
+          "180cd880eb-asn1t.h": [
+            8219,
+            7354,
+            7354,
+            8404
+          ],
+          "19dfcb8de5-crmferr.h": [
+            795,
+            790,
+            766,
+            822
+          ],
+          "1c2483a195-ess.h": [
+            1685,
+            1556,
+            1556,
+            1657
+          ],
+          "1cee8a58d6-buffer.h": [
+            670,
+            629,
+            577,
+            724
+          ],
+          "1e1f798611-conf.h": [
+            2587,
+            2441,
+            2441,
+            2588
+          ],
+          "201d2a4ead-crmf.h": [
+            3580,
+            3551,
+            3468,
+            3628
+          ],
+          "20813359bc-txt_db.h": [
+            764,
+            713,
+            663,
+            793
+          ],
+          "20c54a080b-engineerr.h": [
+            847,
+            839,
+            813,
+            879
+          ],
+          "21b3a8d50b-hmac.h": [
+            715,
+            672,
+            616,
+            756
+          ],
+          "23199196d8-cmperr.h": [
+            1660,
+            1643,
+            1620,
+            1674
+          ],
+          "240eed84d7-conf_api.h": [
+            550,
+            498,
+            459,
+            599
+          ],
+          "25876d4009-asn1err.h": [
+            1709,
+            1704,
+            1681,
+            1725
+          ],
+          "28539e7f70-tls1.h": [
+            10481,
+            10396,
+            10124,
+            10628
+          ],
+          "2a69c47cb1-ecdh.h": [
+            236,
+            205,
+            196,
+            270
+          ],
+          "2b3ce97760-uierr.h": [
+            579,
+            546,
+            537,
+            604
+          ],
+          "2cfa48f9ac-cryptoerr_legacy.h": [
+            9276,
+            9183,
+            9089,
+            9285
+          ],
+          "2d0b94aeaa-comperr.h": [
+            489,
+            440,
+            425,
+            513
+          ],
+          "31848b3467-srtp.h": [
+            783,
+            739,
+            690,
+            820
+          ],
+          "3254dd63e1-sslerr_legacy.h": [
+            3471,
+            3572,
+            3394,
+            3524
+          ],
+          "3350b53d8a-opensslv.h": [
+            1306,
+            1086,
+            1086,
+            1394
+          ],
+          "34df51d96f-ssl.h": [
+            28919,
+            27028,
+            27028,
+            29270
+          ],
+          "34ecf4a856-x509_acert.h": [
+            3613,
+            3603,
+            3472,
+            3621
+          ],
+          "35eb1e690c-symhacks.h": [
+            508,
+            465,
+            437,
+            553
+          ],
+          "38a73160a9-des.h": [
+            1939,
+            1709,
+            1709,
+            1994
+          ],
+          "39f4cf963a-esserr.h": [
+            521,
+            472,
+            455,
+            538
+          ],
+          "3b5f62952c-e_os2.h": [
+            2730,
+            2434,
+            2434,
+            2805
+          ],
+          "3cb02afbd9-pkcs7.h": [
+            4636,
+            4375,
+            4375,
+            4710
+          ],
+          "43de1af3a9-fipskey.h": [
+            634,
+            602,
+            553,
+            672
+          ],
+          "43e10b03cf-rc4.h": [
+            530,
+            479,
+            428,
+            561
+          ]
+        }
+      },
+      "catalogs": {
+        "timings": {
+          "old": {
+            "files": 7,
+            "input": 1494245,
+            "archive": 575173,
+            "libzstd_archive": 575093,
+            "first_block_modes": "0=7",
+            "ordered_2_4_6_batch_ns": [
+              [
+                12384223,
+                12517966,
+                12644992
+              ],
+              [
+                6893104,
+                6930833,
+                7086390
+              ],
+              [
+                1610681,
+                1625095,
+                1656503
+              ],
+              [
+                1600795,
+                1616434,
+                1626407
+              ]
+            ]
+          },
+          "default": {
+            "files": 7,
+            "input": 1494245,
+            "archive": 462451,
+            "libzstd_archive": 575093,
+            "first_block_modes": "6=7",
+            "ordered_2_4_6_batch_ns": [
+              [
+                5855467,
+                5983239,
+                6259133
+              ],
+              [
+                6980012,
+                7146513,
+                7193118
+              ],
+              [
+                1463957,
+                1490492,
+                1510841
+              ],
+              [
+                1629693,
+                1651061,
+                1655752
+              ]
+            ]
+          },
+          "best": {
+            "files": 7,
+            "input": 1494245,
+            "archive": 462451,
+            "libzstd_archive": 575093,
+            "first_block_modes": "6=7",
+            "ordered_2_4_6_batch_ns": [
+              [
+                13010633,
+                13110268,
+                13499234
+              ],
+              [
+                6945074,
+                7000308,
+                7065488
+              ],
+              [
+                1435032,
+                1439440,
+                1456112
+              ],
+              [
+                1614274,
+                1617875,
+                1652313
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 7,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 7,
+        "default_single_block_files": 7,
+        "cli_archives": {
+          "old": 575173,
+          "default": 462451,
+          "best": 462451,
+          "zstd_cli": 574779
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "08c9578702-inkscape.mo": [
+            330785,
+            269226,
+            269226,
+            330459
+          ],
+          "0fed93abd5-inkscape.mo": [
+            80279,
+            62466,
+            62466,
+            80267
+          ],
+          "2658e6529f-inkscape.mo": [
+            101259,
+            80724,
+            80724,
+            101247
+          ],
+          "308d801479-inkscape.mo": [
+            9323,
+            7360,
+            7360,
+            9312
+          ],
+          "701f6162aa-inkscape.mo": [
+            40972,
+            32456,
+            32456,
+            40960
+          ],
+          "7f444363d7-inkscape.mo": [
+            11555,
+            9324,
+            9324,
+            11544
+          ],
+          "a373f20123-inkscape.mo": [
+            1000,
+            895,
+            895,
+            990
+          ]
+        }
+      },
+      "documents": {
+        "timings": {
+          "default": {
+            "files": 6,
+            "input": 97564,
+            "archive": 30849,
+            "libzstd_archive": 32977,
+            "first_block_modes": "4=1,7=5",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1311210,
+                1327094,
+                1334400
+              ],
+              [
+                267580,
+                274289,
+                289537
+              ],
+              [
+                181682,
+                185983,
+                199531
+              ],
+              [
+                82703,
+                84382,
+                85284
+              ]
+            ]
+          },
+          "best": {
+            "files": 6,
+            "input": 97564,
+            "archive": 30849,
+            "libzstd_archive": 32977,
+            "first_block_modes": "4=1,7=5",
+            "ordered_2_4_6_batch_ns": [
+              [
+                3320937,
+                3329816,
+                3449226
+              ],
+              [
+                267257,
+                282014,
+                288999
+              ],
+              [
+                181444,
+                182164,
+                185532
+              ],
+              [
+                82177,
+                83871,
+                84756
+              ]
+            ]
+          },
+          "old": {
+            "files": 6,
+            "input": 97564,
+            "archive": 32465,
+            "libzstd_archive": 32977,
+            "first_block_modes": "1=1,3=5",
+            "ordered_2_4_6_batch_ns": [
+              [
+                690639,
+                725879,
+                731529
+              ],
+              [
+                274363,
+                287452,
+                299379
+              ],
+              [
+                89064,
+                91105,
+                93753
+              ],
+              [
+                83632,
+                85049,
+                86071
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 6,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 6,
+        "default_single_block_files": 6,
+        "cli_archives": {
+          "old": 32465,
+          "default": 30849,
+          "best": 30849,
+          "zstd_cli": 32977
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "22162cac12-copyright": [
+            1216,
+            1128,
+            1128,
+            1239
+          ],
+          "3799e5dcb3-copyright": [
+            19023,
+            18269,
+            18269,
+            19205
+          ],
+          "780638b5b4-copyright": [
+            3403,
+            3145,
+            3145,
+            3535
+          ],
+          "c5b3375447-copyright": [
+            1248,
+            1182,
+            1182,
+            1309
+          ],
+          "cc3f4ecb5b-copyright": [
+            6399,
+            6017,
+            6017,
+            6554
+          ],
+          "f736fba9b0-copyright": [
+            1176,
+            1108,
+            1108,
+            1135
+          ]
+        }
+      },
+      "html": {
+        "timings": {
+          "best": {
+            "files": 4,
+            "input": 72656,
+            "archive": 9010,
+            "libzstd_archive": 10581,
+            "first_block_modes": "7=4",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1293583,
+                1330110,
+                1611288
+              ],
+              [
+                98179,
+                122757,
+                152586
+              ],
+              [
+                121962,
+                140978,
+                186649
+              ],
+              [
+                38458,
+                39112,
+                44041
+              ]
+            ]
+          },
+          "old": {
+            "files": 4,
+            "input": 72656,
+            "archive": 10282,
+            "libzstd_archive": 10581,
+            "first_block_modes": "1=2,3=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                201546,
+                204012,
+                204978
+              ],
+              [
+                93735,
+                94233,
+                94270
+              ],
+              [
+                42139,
+                42203,
+                43065
+              ],
+              [
+                37172,
+                37247,
+                39385
+              ]
+            ]
+          },
+          "default": {
+            "files": 4,
+            "input": 72656,
+            "archive": 9078,
+            "libzstd_archive": 10581,
+            "first_block_modes": "4=2,7=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                425229,
+                427880,
+                442598
+              ],
+              [
+                94996,
+                95491,
+                96972
+              ],
+              [
+                113926,
+                114549,
+                115786
+              ],
+              [
+                37031,
+                37040,
+                37187
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 4,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 4,
+        "default_single_block_files": 4,
+        "cli_archives": {
+          "old": 10282,
+          "default": 9078,
+          "best": 9010,
+          "zstd_cli": 10581
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "39009b77f3-index.html": [
+            776,
+            676,
+            650,
+            834
+          ],
+          "5d704be3d2-api-index-full.html": [
+            1738,
+            1588,
+            1588,
+            1768
+          ],
+          "5e13d9d123-libpsl-Public-Suffix-List-functions.html": [
+            6968,
+            6117,
+            6117,
+            7127
+          ],
+          "72e5ae6c02-libpsl.html": [
+            800,
+            697,
+            655,
+            852
+          ]
+        }
+      },
+      "js-css": {
+        "timings": {
+          "old": {
+            "files": 32,
+            "input": 227081,
+            "archive": 71773,
+            "libzstd_archive": 72843,
+            "first_block_modes": "1=13,3=19",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1606413,
+                1622084,
+                1831499
+              ],
+              [
+                944841,
+                962459,
+                975204
+              ],
+              [
+                259324,
+                261210,
+                401058
+              ],
+              [
+                240580,
+                241760,
+                251069
+              ]
+            ]
+          },
+          "default": {
+            "files": 32,
+            "input": 227081,
+            "archive": 68377,
+            "libzstd_archive": 72843,
+            "first_block_modes": "4=14,7=18",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2825397,
+                2889604,
+                2897072
+              ],
+              [
+                955646,
+                969400,
+                1027431
+              ],
+              [
+                779091,
+                784876,
+                790785
+              ],
+              [
+                241689,
+                243266,
+                244448
+              ]
+            ]
+          },
+          "best": {
+            "files": 32,
+            "input": 227081,
+            "archive": 68154,
+            "libzstd_archive": 72843,
+            "first_block_modes": "1=2,4=1,7=29",
+            "ordered_2_4_6_batch_ns": [
+              [
+                7476362,
+                7514991,
+                7564390
+              ],
+              [
+                926426,
+                929399,
+                932649
+              ],
+              [
+                782665,
+                785442,
+                790429
+              ],
+              [
+                239385,
+                239993,
+                240777
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 32,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 32,
+        "default_single_block_files": 32,
+        "cli_archives": {
+          "old": 71773,
+          "default": 68377,
+          "best": 68154,
+          "zstd_cli": 72843
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "02d9261c72-selectmenu.js": [
+            4970,
+            4727,
+            4727,
+            5099
+          ],
+          "06aa042ce1-autocomplete.min.js": [
+            3256,
+            3132,
+            3132,
+            3284
+          ],
+          "0a2bc3f7fe-menu.css": [
+            582,
+            512,
+            497,
+            577
+          ],
+          "0fc02a4569-accordion.css": [
+            300,
+            262,
+            254,
+            317
+          ],
+          "13f161fc18-sortable.css": [
+            185,
+            152,
+            147,
+            185
+          ],
+          "14fd5db068-draggable.min.css": [
+            178,
+            149,
+            140,
+            179
+          ],
+          "1647f231b1-progressbar.css": [
+            2058,
+            2037,
+            2037,
+            2054
+          ],
+          "180f2da721-selectmenu.min.css": [
+            455,
+            400,
+            392,
+            439
+          ],
+          "2102fb7818-selectable.js": [
+            2235,
+            2134,
+            2134,
+            2258
+          ],
+          "227e96f847-tooltip.js": [
+            4684,
+            4395,
+            4395,
+            4862
+          ],
+          "253c9936af-selectmenu.min.js": [
+            3320,
+            3182,
+            3182,
+            3294
+          ],
+          "29f16866e3-autocomplete.js": [
+            5630,
+            5322,
+            5322,
+            5787
+          ],
+          "2ab0b9e759-menu.min.css": [
+            496,
+            453,
+            432,
+            501
+          ],
+          "2c0b74e566-controlgroup.js": [
+            2806,
+            2651,
+            2651,
+            2896
+          ],
+          "2d8936a6a5-mouse.min.js": [
+            1125,
+            1100,
+            1100,
+            1127
+          ],
+          "2e822d8ec5-checkboxradio.min.js": [
+            1526,
+            1461,
+            1444,
+            1530
+          ],
+          "2f50726c59-progressbar.min.js": [
+            919,
+            890,
+            890,
+            936
+          ],
+          "33c4dc0692-selectable.min.js": [
+            1506,
+            1452,
+            1411,
+            1510
+          ],
+          "34af8d182c-resizable.js": [
+            8058,
+            7846,
+            7846,
+            8196
+          ],
+          "3a08ce4840-spinner.css": [
+            486,
+            446,
+            419,
+            499
+          ],
+          "45910701d7-progressbar.js": [
+            1491,
+            1390,
+            1390,
+            1525
+          ],
+          "486e92b8aa-core.min.css": [
+            600,
+            578,
+            554,
+            622
+          ],
+          "4b25bfa4b5-droppable.min.js": [
+            2269,
+            2181,
+            2181,
+            2280
+          ],
+          "4e772a2b5e-dialog.css": [
+            637,
+            585,
+            566,
+            633
+          ],
+          "505e8ecb49-all.css": [
+            199,
+            165,
+            160,
+            202
+          ],
+          "52c37c9035-menu.js": [
+            5772,
+            5529,
+            5529,
+            5899
+          ],
+          "595d4c1974-sortable.min.js": [
+            7685,
+            7318,
+            7318,
+            7773
+          ],
+          "5a80c83361-all.min.css": [
+            197,
+            164,
+            159,
+            200
+          ],
+          "5e8f98ddb1-tabs.min.js": [
+            4551,
+            4365,
+            4365,
+            4559
+          ],
+          "62da064a7d-selectmenu.css": [
+            472,
+            422,
+            410,
+            468
+          ],
+          "6407187def-spinner.min.js": [
+            2762,
+            2661,
+            2661,
+            2788
+          ],
+          "659c28334f-checkboxradio.min.css": [
+            363,
+            316,
+            309,
+            364
+          ]
+        }
+      },
+      "python": {
+        "timings": {
+          "default": {
+            "files": 39,
+            "input": 665656,
+            "archive": 118496,
+            "libzstd_archive": 129841,
+            "first_block_modes": "4=3,7=36",
+            "ordered_2_4_6_batch_ns": [
+              [
+                6089337,
+                6175545,
+                6222169
+              ],
+              [
+                1679469,
+                1683050,
+                1695795
+              ],
+              [
+                1764897,
+                1776540,
+                1796123
+              ],
+              [
+                490787,
+                494736,
+                500075
+              ]
+            ]
+          },
+          "best": {
+            "files": 39,
+            "input": 665656,
+            "archive": 117650,
+            "libzstd_archive": 129841,
+            "first_block_modes": "1=8,7=31",
+            "ordered_2_4_6_batch_ns": [
+              [
+                14897372,
+                14994888,
+                15077678
+              ],
+              [
+                1678994,
+                1683579,
+                1701876
+              ],
+              [
+                1796906,
+                1805826,
+                1824380
+              ],
+              [
+                504950,
+                510792,
+                521633
+              ]
+            ]
+          },
+          "old": {
+            "files": 39,
+            "input": 665656,
+            "archive": 127881,
+            "libzstd_archive": 129841,
+            "first_block_modes": "1=3,3=36",
+            "ordered_2_4_6_batch_ns": [
+              [
+                3210514,
+                3256579,
+                3536884
+              ],
+              [
+                1756946,
+                1786422,
+                1845816
+              ],
+              [
+                552876,
+                556471,
+                564400
+              ],
+              [
+                506085,
+                508170,
+                512156
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 39,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 39,
+        "default_single_block_files": 39,
+        "cli_archives": {
+          "old": 127881,
+          "default": 118496,
+          "best": 117650,
+          "zstd_cli": 129841
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "02151004cd-defaults.py": [
+            3540,
+            3305,
+            3151,
+            3601
+          ],
+          "03e1560ce6-python_wheel_generate.py": [
+            1496,
+            1373,
+            1373,
+            1558
+          ],
+          "03ee4a40db-sampler.py": [
+            2047,
+            1897,
+            1897,
+            2079
+          ],
+          "0410afa7a6-keyframes.py": [
+            1151,
+            1052,
+            1052,
+            1161
+          ],
+          "041f1b4b8f-channel_target.py": [
+            436,
+            390,
+            383,
+            450
+          ],
+          "04dd6e8dcd-action_layers.py": [
+            4259,
+            3914,
+            3914,
+            4335
+          ],
+          "053c4f0f8e-components.py": [
+            1193,
+            1101,
+            1101,
+            1194
+          ],
+          "080e21a0de-tree.py": [
+            9707,
+            8487,
+            8487,
+            9841
+          ],
+          "0831801bd5-super_chain.py": [
+            6148,
+            5613,
+            5613,
+            6231
+          ],
+          "0ca90df549-pbr_metallic_roughness.py": [
+            2304,
+            2152,
+            2150,
+            2337
+          ],
+          "0ccb9f3366-clearcoat.py": [
+            1494,
+            1336,
+            1336,
+            1515
+          ],
+          "0d39d8c364-metaclass.py": [
+            2038,
+            1799,
+            1799,
+            2132
+          ],
+          "0e94aaa189-lights.py": [
+            2045,
+            1868,
+            1868,
+            2082
+          ],
+          "0ec2ad6f40-horse.py": [
+            4540,
+            4329,
+            4318,
+            4561
+          ],
+          "0f3bf27370-node.py": [
+            3834,
+            3472,
+            3472,
+            3874
+          ],
+          "0f64aad6c0-light.py": [
+            1489,
+            1370,
+            1370,
+            1511
+          ],
+          "0fc961f746-limb_rigs.py": [
+            11465,
+            10460,
+            10460,
+            11588
+          ],
+          "118005ec62-layers.py": [
+            3837,
+            3559,
+            3559,
+            3862
+          ],
+          "11dc1c68ca-animation.py": [
+            9386,
+            8714,
+            8714,
+            9500
+          ],
+          "12af895442-cameras.py": [
+            1226,
+            1113,
+            1113,
+            1243
+          ],
+          "1473aec743-skin_eye.py": [
+            7543,
+            7021,
+            7021,
+            7678
+          ],
+          "1478f537c8-action_sampled.py": [
+            951,
+            880,
+            880,
+            961
+          ],
+          "14b9c47e45-animation_utils.py": [
+            973,
+            861,
+            861,
+            974
+          ],
+          "1583bf5784-__init__.py": [
+            407,
+            363,
+            347,
+            416
+          ],
+          "159db194e7-basic_human.py": [
+            2676,
+            2679,
+            2585,
+            2710
+          ],
+          "15b6dc96f9-shark.py": [
+            3025,
+            2984,
+            2867,
+            3050
+          ],
+          "15dbaef921-basic_quadruped.py": [
+            2876,
+            2842,
+            2742,
+            2929
+          ],
+          "183d0eb4fb-gltf2_blender_ui.py": [
+            5189,
+            4667,
+            4667,
+            5230
+          ],
+          "1841757c26-preferences.py": [
+            4275,
+            4171,
+            4101,
+            4336
+          ],
+          "1aa26432d2-widgets.py": [
+            6840,
+            6876,
+            6642,
+            6907
+          ],
+          "1b0220fe7e-misc.py": [
+            3712,
+            3489,
+            3489,
+            3776
+          ],
+          "1b2f899973-metarig_menu.py": [
+            2555,
+            2379,
+            2379,
+            2619
+          ],
+          "1b70ce3d8b-ior.py": [
+            691,
+            673,
+            632,
+            744
+          ],
+          "1b898027fb-test_path_pattern_match.py": [
+            1492,
+            1334,
+            1334,
+            1524
+          ],
+          "1c4e607066-skins.py": [
+            1562,
+            1450,
+            1450,
+            1589
+          ],
+          "1cbc805de0-skin_parents.py": [
+            5132,
+            4555,
+            4555,
+            5280
+          ],
+          "1e158095b0-draco.py": [
+            968,
+            864,
+            864,
+            991
+          ],
+          "1f040da690-operators.py": [
+            1494,
+            1379,
+            1379,
+            1557
+          ],
+          "1f1dd83787-keyframes.py": [
+            1885,
+            1725,
+            1725,
+            1915
+          ]
+        }
+      },
+      "rust": {
+        "timings": {
+          "best": {
+            "files": 2,
+            "input": 150532,
+            "archive": 21680,
+            "libzstd_archive": 25493,
+            "first_block_modes": "7=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2906353,
+                2937895,
+                2973255
+              ],
+              [
+                242991,
+                245843,
+                254640
+              ],
+              [
+                342183,
+                347174,
+                349830
+              ],
+              [
+                83275,
+                83775,
+                83919
+              ]
+            ]
+          },
+          "old": {
+            "files": 2,
+            "input": 150532,
+            "archive": 24943,
+            "libzstd_archive": 25493,
+            "first_block_modes": "3=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                534871,
+                545674,
+                547662
+              ],
+              [
+                251676,
+                261587,
+                265020
+              ],
+              [
+                81084,
+                81555,
+                81762
+              ],
+              [
+                83421,
+                84071,
+                88482
+              ]
+            ]
+          },
+          "default": {
+            "files": 2,
+            "input": 150532,
+            "archive": 21680,
+            "libzstd_archive": 25493,
+            "first_block_modes": "7=2",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1301827,
+                1307366,
+                1319853
+              ],
+              [
+                252288,
+                256438,
+                261581
+              ],
+              [
+                336238,
+                344378,
+                346816
+              ],
+              [
+                83458,
+                83559,
+                83827
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 2,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 2,
+        "default_single_block_files": 2,
+        "cli_archives": {
+          "old": 24943,
+          "default": 21680,
+          "best": 21680,
+          "zstd_cli": 25493
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "3b1fae5cba-ripgrep-printer.rs": [
+            19427,
+            16753,
+            16753,
+            19782
+          ],
+          "cf62393b11-ripgrep-main.rs": [
+            5516,
+            4927,
+            4927,
+            5711
+          ]
+        }
+      },
+      "short-files": {
+        "timings": {
+          "old": {
+            "files": 54,
+            "input": 13350,
+            "archive": 7819,
+            "libzstd_archive": 7513,
+            "first_block_modes": "1=54",
+            "ordered_2_4_6_batch_ns": [
+              [
+                307706,
+                310716,
+                316491
+              ],
+              [
+                164606,
+                172939,
+                187130
+              ],
+              [
+                34298,
+                34459,
+                35055
+              ],
+              [
+                66850,
+                67762,
+                68062
+              ]
+            ]
+          },
+          "default": {
+            "files": 54,
+            "input": 13350,
+            "archive": 6529,
+            "libzstd_archive": 7513,
+            "first_block_modes": "4=54",
+            "ordered_2_4_6_batch_ns": [
+              [
+                80171,
+                80961,
+                81585
+              ],
+              [
+                164429,
+                165822,
+                167298
+              ],
+              [
+                24962,
+                25263,
+                25367
+              ],
+              [
+                66572,
+                67165,
+                67904
+              ]
+            ]
+          },
+          "best": {
+            "files": 54,
+            "input": 13350,
+            "archive": 6452,
+            "libzstd_archive": 7513,
+            "first_block_modes": "4=32,7=22",
+            "ordered_2_4_6_batch_ns": [
+              [
+                871926,
+                889753,
+                907820
+              ],
+              [
+                164690,
+                166701,
+                166959
+              ],
+              [
+                35845,
+                36252,
+                36312
+              ],
+              [
+                67425,
+                67840,
+                68248
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 54,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 54,
+        "default_single_block_files": 54,
+        "cli_archives": {
+          "old": 7819,
+          "default": 6529,
+          "best": 6452,
+          "zstd_cli": 7513
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "0114c0b682-Illuminant_LED-B3.py": [
+            105,
+            88,
+            85,
+            103
+          ],
+          "03cc509123-1_slash_2.3_inch.py": [
+            135,
+            107,
+            107,
+            129
+          ],
+          "04b0acf42a-Illuminant_F6.py": [
+            105,
+            88,
+            86,
+            102
+          ],
+          "07b8c9c333-1_slash_2.5_inch.py": [
+            135,
+            108,
+            108,
+            129
+          ],
+          "0898a6147b-Lower_Memory.py": [
+            203,
+            174,
+            173,
+            189
+          ],
+          "0a02cfa4fe-Illuminant_B.py": [
+            105,
+            89,
+            85,
+            103
+          ],
+          "0ac5a86958-Limited_Global_Illumination.py": [
+            191,
+            160,
+            160,
+            177
+          ],
+          "0daf9526d9-Illuminant_F1.py": [
+            105,
+            88,
+            85,
+            103
+          ],
+          "0e16afc1b9-Xvid.py": [
+            245,
+            214,
+            210,
+            230
+          ],
+          "0efc6b7a8e-Full_Global_Illumination.py": [
+            184,
+            155,
+            155,
+            169
+          ],
+          "0f6fd64bb6-RED_Monstro_8K.py": [
+            136,
+            108,
+            108,
+            130
+          ],
+          "108c651bc0-Water.py": [
+            94,
+            74,
+            74,
+            90
+          ],
+          "10f6db6483-Illuminant_F12.py": [
+            104,
+            88,
+            84,
+            102
+          ],
+          "111043f028-Blackmagic_Pocket_6k.py": [
+            105,
+            84,
+            84,
+            104
+          ],
+          "119510ac61-30.py": [
+            75,
+            58,
+            58,
+            75
+          ],
+          "13850d0d32-Default.py": [
+            262,
+            225,
+            225,
+            251
+          ],
+          "1557ab8cfb-Analog_65mm.py": [
+            105,
+            84,
+            84,
+            104
+          ],
+          "15a00299d3-1_slash_3.2_inch.py": [
+            135,
+            107,
+            107,
+            128
+          ],
+          "15fbcab89e-Near_Plane.py": [
+            123,
+            94,
+            94,
+            115
+          ],
+          "16f82b519e-Visual_Studio_Code.py": [
+            149,
+            135,
+            123,
+            161
+          ],
+          "18533c6bd2-MFT.py": [
+            135,
+            107,
+            107,
+            128
+          ],
+          "1ad1d15aea-4K_DCI_2160p.py": [
+            137,
+            117,
+            117,
+            129
+          ],
+          "1d25bc8efb-sl_plus_open_sim_static.py": [
+            242,
+            210,
+            206,
+            234
+          ],
+          "1d812e128c-Illuminant_F11.py": [
+            104,
+            87,
+            84,
+            102
+          ],
+          "1f83c7a647-Default.py": [
+            263,
+            223,
+            223,
+            260
+          ],
+          "1f89c80b40-Illuminant_E.py": [
+            106,
+            89,
+            87,
+            105
+          ],
+          "20822f8855-Illuminant_LED-RGB1.py": [
+            105,
+            88,
+            85,
+            103
+          ],
+          "21bcf8439c-TV_PAL_4_colon_3.py": [
+            142,
+            119,
+            119,
+            131
+          ],
+          "22c85fd986-Illuminant_D65.py": [
+            104,
+            88,
+            85,
+            103
+          ],
+          "23293eeba7-Arri_Alexa_65.py": [
+            105,
+            85,
+            85,
+            104
+          ],
+          "24b18260a0-Illuminant_LED-BH1.py": [
+            105,
+            85,
+            85,
+            103
+          ],
+          "24d72a8a68-Illuminant_D75.py": [
+            104,
+            88,
+            85,
+            102
+          ],
+          "25d556cf22-1_slash_1.8_inch.py": [
+            103,
+            83,
+            83,
+            102
+          ],
+          "26fc00fefd-Illuminant_C.py": [
+            105,
+            89,
+            86,
+            102
+          ],
+          "2cb50eb3de-sl_plus_open_sim_rigged.py": [
+            243,
+            212,
+            208,
+            234
+          ],
+          "2e0b19acfe-Faster_Render.py": [
+            211,
+            175,
+            175,
+            192
+          ],
+          "2e403d2f8d-Cotton.py": [
+            158,
+            128,
+            128,
+            150
+          ],
+          "2fa4b38449-DVD_(note_colon__this_changes_render_resolution).py": [
+            311,
+            271,
+            271,
+            289
+          ],
+          "2fc89c1f04-WebM_(VP9+Opus).py": [
+            180,
+            154,
+            151,
+            174
+          ],
+          "303318dbc7-HDV_NTSC_1080p.py": [
+            138,
+            120,
+            120,
+            132
+          ],
+          "31e4bf7777-Arri_Alexa_Mini_&_SXT.py": [
+            105,
+            85,
+            85,
+            104
+          ],
+          "32a0374dec-Stroke_Only.py": [
+            341,
+            287,
+            287,
+            324
+          ],
+          "37a2d504eb-HDV_PAL_1080p.py": [
+            133,
+            118,
+            116,
+            129
+          ],
+          "393ee8e36b-4K_UHDTV_2160p.py": [
+            136,
+            116,
+            116,
+            128
+          ],
+          "3969b8ae43-Blackmagic_URSA_4.6K.py": [
+            138,
+            108,
+            108,
+            130
+          ],
+          "3b9f4a8bfb-14_colon_9_in_16_colon_9.py": [
+            129,
+            99,
+            99,
+            120
+          ],
+          "3bf05523fe-29.97.py": [
+            79,
+            63,
+            63,
+            79
+          ],
+          "41d92ce6bf-Illuminant_D93.py": [
+            104,
+            88,
+            85,
+            102
+          ],
+          "43cebe2dbd-Object.py": [
+            123,
+            94,
+            94,
+            116
+          ],
+          "43db0e1996-Illuminant_A.py": [
+            104,
+            88,
+            84,
+            102
+          ],
+          "4452179f03-Arri_Alexa_LF.py": [
+            105,
+            85,
+            85,
+            104
+          ],
+          "449bc8ebc1-Illuminant_D55.py": [
+            105,
+            88,
+            85,
+            101
+          ],
+          "48e78abe4c-Illuminant_F5.py": [
+            105,
+            89,
+            85,
+            103
+          ],
+          "4949379c96-Preview.py": [
+            210,
+            175,
+            175,
+            198
+          ]
+        }
+      },
+      "structured-text": {
+        "timings": {
+          "default": {
+            "files": 10,
+            "input": 106898,
+            "archive": 25295,
+            "libzstd_archive": 26278,
+            "first_block_modes": "7=10",
+            "ordered_2_4_6_batch_ns": [
+              [
+                997775,
+                1004964,
+                1023770
+              ],
+              [
+                244756,
+                245559,
+                251360
+              ],
+              [
+                214549,
+                225432,
+                233746
+              ],
+              [
+                86221,
+                86292,
+                88202
+              ]
+            ]
+          },
+          "best": {
+            "files": 10,
+            "input": 106898,
+            "archive": 25174,
+            "libzstd_archive": 26278,
+            "first_block_modes": "1=3,4=1,7=6",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2677813,
+                2721860,
+                2759811
+              ],
+              [
+                240555,
+                240832,
+                250475
+              ],
+              [
+                207098,
+                209301,
+                210851
+              ],
+              [
+                87063,
+                87888,
+                89551
+              ]
+            ]
+          },
+          "old": {
+            "files": 10,
+            "input": 106898,
+            "archive": 25905,
+            "libzstd_archive": 26278,
+            "first_block_modes": "3=10",
+            "ordered_2_4_6_batch_ns": [
+              [
+                456581,
+                474834,
+                506202
+              ],
+              [
+                239922,
+                247545,
+                252074
+              ],
+              [
+                84845,
+                86085,
+                109237
+              ],
+              [
+                88406,
+                88753,
+                110732
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 10,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 10,
+        "default_single_block_files": 10,
+        "cli_archives": {
+          "old": 25905,
+          "default": 25295,
+          "best": 25174,
+          "zstd_cli": 26278
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "00df21553b-xara.xml": [
+            3659,
+            3577,
+            3536,
+            3733
+          ],
+          "5ba380e5f3-acd-canvas.xml": [
+            3280,
+            3165,
+            3165,
+            3331
+          ],
+          "5f40f3bfaf-macromedia-freehand-mx.xml": [
+            3883,
+            3793,
+            3777,
+            3972
+          ],
+          "62499abd6a-default.xml": [
+            4706,
+            4612,
+            4612,
+            4776
+          ],
+          "6cccfccae4-right-handed-illustration.xml": [
+            3464,
+            3449,
+            3408,
+            3519
+          ],
+          "7e4d57099b-zoner-draw.xml": [
+            1856,
+            1788,
+            1788,
+            1876
+          ],
+          "9a215e8690-corel-draw-x4.xml": [
+            1845,
+            1840,
+            1817,
+            1861
+          ],
+          "abc15c04cc-units.xml": [
+            674,
+            627,
+            627,
+            653
+          ],
+          "b9b56d95b0-corel-draw-x8.xml": [
+            1176,
+            1128,
+            1128,
+            1163
+          ],
+          "d461f69e92-adobe-illustrator-cs2.xml": [
+            1362,
+            1316,
+            1316,
+            1394
+          ]
+        }
+      },
+      "web": {
+        "timings": {
+          "best": {
+            "files": 3,
+            "input": 213201,
+            "archive": 43675,
+            "libzstd_archive": 50138,
+            "first_block_modes": "7=3",
+            "ordered_2_4_6_batch_ns": [
+              [
+                5190488,
+                5200177,
+                5298261
+              ],
+              [
+                530929,
+                535711,
+                551220
+              ],
+              [
+                533366,
+                535422,
+                540593
+              ],
+              [
+                137767,
+                139152,
+                139660
+              ]
+            ]
+          },
+          "old": {
+            "files": 3,
+            "input": 213201,
+            "archive": 49037,
+            "libzstd_archive": 50138,
+            "first_block_modes": "3=3",
+            "ordered_2_4_6_batch_ns": [
+              [
+                1061192,
+                1064849,
+                1076885
+              ],
+              [
+                536121,
+                565113,
+                576325
+              ],
+              [
+                139887,
+                142541,
+                143067
+              ],
+              [
+                135920,
+                136263,
+                137919
+              ]
+            ]
+          },
+          "default": {
+            "files": 3,
+            "input": 213201,
+            "archive": 43675,
+            "libzstd_archive": 50138,
+            "first_block_modes": "7=3",
+            "ordered_2_4_6_batch_ns": [
+              [
+                2191516,
+                2217676,
+                2221386
+              ],
+              [
+                536637,
+                540867,
+                543357
+              ],
+              [
+                506454,
+                512634,
+                516095
+              ],
+              [
+                135454,
+                137055,
+                137571
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 3,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 3,
+        "default_single_block_files": 3,
+        "cli_archives": {
+          "old": 49037,
+          "default": 43675,
+          "best": 43675,
+          "zstd_cli": 50138
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "4f13563a25-postgres-select.html": [
+            26348,
+            22748,
+            22748,
+            26806
+          ],
+          "7b7f17cd88-libpng.html": [
+            16241,
+            14994,
+            14994,
+            16676
+          ],
+          "e2212ae3ae-debian-install-zh.html": [
+            6448,
+            5933,
+            5933,
+            6656
+          ]
+        }
+      }
+    }
+  }
+}

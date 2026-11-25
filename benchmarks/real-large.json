@@ -1,0 +1,386 @@
+{
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "machine": "x86_64",
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "affinity": [
+    8
+  ],
+  "manifest_sha256": "86ce26f0899c874cae5601db0c15e9c190616955f324a36c51013627a3dec8f4",
+  "libzstd": "1.5.7",
+  "compiler": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+  "release_binary_sha256": "a6cfa6298424a0d21d3ef8f0e32e3bd2ec5901753c86039ac31cedc69e9d2bb7",
+  "baseline_commit": "67155209ee98836be539806cda4c74119447b7fc",
+  "versions": {
+    "baseline": "ztok 0.1.0",
+    "candidate": "ztok 0.2.0",
+    "zstd": "*** Zstandard CLI (64-bit) v1.5.7, by Yann Collet ***"
+  },
+  "codecs": [
+    "old",
+    "default",
+    "best",
+    "zstd_cli"
+  ],
+  "timing_columns": [
+    "candidate_encode",
+    "libzstd_encode",
+    "candidate_decode",
+    "libzstd_decode"
+  ],
+  "timing_rounds": 7,
+  "minimum_ms_per_round": 25,
+  "level": 3,
+  "checksum": true,
+  "candidate_default_block_size": 4194304,
+  "candidate_best_block_size": 16777216,
+  "corpus_file_unit": "whole file; each file is compressed independently",
+  "groups": {
+    "holdout": {
+      "ghostscript-elf": {
+        "timings": {
+          "old": {
+            "files": 1,
+            "input": 22649096,
+            "archive": 3292567,
+            "libzstd_archive": 3284701,
+            "first_block_modes": "0=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                91126930,
+                91999227,
+                92552523
+              ],
+              [
+                36725376,
+                36891206,
+                37547354
+              ],
+              [
+                30073926,
+                30142549,
+                41598523
+              ],
+              [
+                9743300,
+                9793831,
+                10020970
+              ]
+            ]
+          },
+          "default": {
+            "files": 1,
+            "input": 22649096,
+            "archive": 3234800,
+            "libzstd_archive": 3284701,
+            "first_block_modes": "5=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                69942016,
+                70856223,
+                72601463
+              ],
+              [
+                36850615,
+                37365670,
+                37957632
+              ],
+              [
+                26799994,
+                28326694,
+                37696869
+              ],
+              [
+                9902394,
+                10044188,
+                10132438
+              ]
+            ]
+          },
+          "best": {
+            "files": 1,
+            "input": 22649096,
+            "archive": 3211107,
+            "libzstd_archive": 3284701,
+            "first_block_modes": "5=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                83650687,
+                90718436,
+                98840500
+              ],
+              [
+                37784461,
+                38476363,
+                41305636
+              ],
+              [
+                25973007,
+                26950450,
+                29741525
+              ],
+              [
+                9934796,
+                10044041,
+                13954898
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 0,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 0,
+        "default_single_block_files": 0,
+        "cli_archives": {
+          "old": 3292567,
+          "default": 3234800,
+          "best": 3211107,
+          "zstd_cli": 3294759
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "libgs.so.10.05": [
+            3292567,
+            3234800,
+            3211107,
+            3294759
+          ]
+        }
+      },
+      "pnpm-js": {
+        "timings": {
+          "default": {
+            "files": 1,
+            "input": 13891041,
+            "archive": 3072910,
+            "libzstd_archive": 3052559,
+            "first_block_modes": "0=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                44474179,
+                46364568,
+                48048224
+              ],
+              [
+                44661311,
+                44752940,
+                47138152
+              ],
+              [
+                11807558,
+                12068444,
+                12761094
+              ],
+              [
+                11024164,
+                11529429,
+                12372045
+              ]
+            ]
+          },
+          "best": {
+            "files": 1,
+            "input": 13891041,
+            "archive": 2859952,
+            "libzstd_archive": 3052559,
+            "first_block_modes": "1=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                299481985,
+                306196247,
+                313143192
+              ],
+              [
+                44324403,
+                44809955,
+                45552163
+              ],
+              [
+                37027301,
+                39654296,
+                40398496
+              ],
+              [
+                10828346,
+                10844146,
+                10998706
+              ]
+            ]
+          },
+          "old": {
+            "files": 1,
+            "input": 13891041,
+            "archive": 3127811,
+            "libzstd_archive": 3052559,
+            "first_block_modes": "0=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                97095571,
+                97227440,
+                97249082
+              ],
+              [
+                43483552,
+                43569221,
+                43941763
+              ],
+              [
+                11725631,
+                11738834,
+                12051491
+              ],
+              [
+                10721111,
+                10785334,
+                10840037
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 1,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 1,
+        "default_single_block_files": 0,
+        "cli_archives": {
+          "old": 3127811,
+          "default": 3072910,
+          "best": 2859952,
+          "zstd_cli": 3074822
+        },
+        "new_size_above_stock_files": {
+          "default": 0,
+          "best": 0
+        },
+        "file_archive_bytes": {
+          "pnpm.mjs": [
+            3127811,
+            3072910,
+            2859952,
+            3074822
+          ]
+        }
+      },
+      "unicode-text": {
+        "timings": {
+          "best": {
+            "files": 1,
+            "input": 6880530,
+            "archive": 384270,
+            "libzstd_archive": 391755,
+            "first_block_modes": "3=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                78116886,
+                78802548,
+                80440346
+              ],
+              [
+                7260646,
+                7304742,
+                7967560
+              ],
+              [
+                3519417,
+                3530886,
+                3554230
+              ],
+              [
+                3563232,
+                3583789,
+                3612926
+              ]
+            ]
+          },
+          "old": {
+            "files": 1,
+            "input": 6880530,
+            "archive": 415865,
+            "libzstd_archive": 391755,
+            "first_block_modes": "3=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                12314799,
+                12350933,
+                12617538
+              ],
+              [
+                7251212,
+                7331798,
+                7395634
+              ],
+              [
+                3984546,
+                4060657,
+                4100669
+              ],
+              [
+                3561989,
+                3575190,
+                3665140
+              ]
+            ]
+          },
+          "default": {
+            "files": 1,
+            "input": 6880530,
+            "archive": 391570,
+            "libzstd_archive": 391755,
+            "first_block_modes": "0=1",
+            "ordered_2_4_6_batch_ns": [
+              [
+                7513877,
+                7697382,
+                8375064
+              ],
+              [
+                7236244,
+                7419598,
+                7753966
+              ],
+              [
+                6037031,
+                6051671,
+                6899061
+              ],
+              [
+                3739216,
+                3924211,
+                6372304
+              ]
+            ]
+          }
+        },
+        "stock_interop_checks": {
+          "candidate_read_stock": 1,
+          "stock_read_candidate": 0
+        },
+        "best_single_block_files": 1,
+        "default_single_block_files": 0,
+        "cli_archives": {
+          "old": 415865,
+          "default": 391570,
+          "best": 384270,
+          "zstd_cli": 383632
+        },
+        "new_size_above_stock_files": {
+          "default": 1,
+          "best": 1
+        },
+        "file_archive_bytes": {
+          "BidiCharacterTest.txt": [
+            415865,
+            391570,
+            384270,
+            383632
+          ]
+        }
+      }
+    }
+  }
+}

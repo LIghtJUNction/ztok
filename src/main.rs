@@ -5,7 +5,7 @@ use std::path::Path;
 use std::process::ExitCode;
 use std::time::{SystemTime, UNIX_EPOCH};
 
-const HELP: &str = "ztok — lossless Gemma 4 vocabulary compression\n\n  ztok c [--level 1..19] INPUT OUTPUT\n  ztok d INPUT OUTPUT\n\nUse - for standard input or output. Existing output files are preserved.";
+const HELP: &str = "ztok — lossless Gemma 4 vocabulary compression\n\n  ztok c [--best] [--level 1..19] INPUT OUTPUT\n  ztok d INPUT OUTPUT\n\nUse - for standard input or output. Existing output files are preserved.";
 
 fn run() -> Result<(), Box<dyn std::error::Error>> {
     let mut args = std::env::args_os().skip(1);
@@ -25,12 +25,17 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
     };
     let mut src = args.next().ok_or(HELP)?;
     let mut level = 3;
-    if is_compress && src == "--level" {
-        level = args
-            .next()
-            .and_then(|v| v.to_str()?.parse().ok())
-            .filter(|v| (1..=19).contains(v))
-            .ok_or("expected level 1..19")?;
+    let mut best = false;
+    while is_compress && (src == "--best" || src == "--level") {
+        if src == "--best" {
+            best = true;
+        } else {
+            level = args
+                .next()
+                .and_then(|v| v.to_str()?.parse().ok())
+                .filter(|v| (1..=19).contains(v))
+                .ok_or("expected level 1..19")?;
+        }
         src = args.next().ok_or(HELP)?;
     }
     let dest = args.next().ok_or(HELP)?;
@@ -46,7 +51,9 @@ fn run() -> Result<(), Box<dyn std::error::Error>> {
         &mut file
     };
     let transform = |w: &mut dyn Write| -> io::Result<()> {
-        if is_compress {
+        if best {
+            ztok::compress_best_stream(input, &mut *w, level)?;
+        } else if is_compress {
             ztok::compress_stream(input, &mut *w, level)?;
         } else {
             ztok::decompress_stream(input, &mut *w)?;

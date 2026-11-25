@@ -1,0 +1,89 @@
+{
+  "manifest_sha256": "86ce26f0899c874cae5601db0c15e9c190616955f324a36c51013627a3dec8f4",
+  "binary_sha256": "a6cfa6298424a0d21d3ef8f0e32e3bd2ec5901753c86039ac31cedc69e9d2bb7",
+  "ztok_version": "ztok 0.2.0",
+  "zstd_version": "*** Zstandard CLI (64-bit) v1.5.7, by Yann Collet ***",
+  "archive_columns": [
+    "ztok_best",
+    "stock_cli"
+  ],
+  "levels": {
+    "3": {
+      "pnpm-js": {
+        "source_bytes": 13891041,
+        "ztok_best": 2859952,
+        "stock_cli": 3074822,
+        "file_archive_bytes": {
+          "pnpm.mjs": [
+            2859952,
+            3074822
+          ]
+        },
+        "checkpoint_best": 2886153
+      },
+      "unicode-text": {
+        "source_bytes": 6880530,
+        "ztok_best": 384270,
+        "stock_cli": 383632,
+        "file_archive_bytes": {
+          "BidiCharacterTest.txt": [
+            384270,
+            383632
+          ]
+        },
+        "checkpoint_best": 383043
+      },
+      "ghostscript-elf": {
+        "source_bytes": 22649096,
+        "ztok_best": 3211107,
+        "stock_cli": 3294759,
+        "file_archive_bytes": {
+          "libgs.so.10.05": [
+            3211107,
+            3294759
+          ]
+        },
+        "checkpoint_best": 3234800
+      }
+    },
+    "19": {
+      "pnpm-js": {
+        "source_bytes": 13891041,
+        "ztok_best": 2105508,
+        "stock_cli": 2118677,
+        "file_archive_bytes": {
+          "pnpm.mjs": [
+            2105508,
+            2118677
+          ]
+        },
+        "checkpoint_best": 2338079
+      },
+      "unicode-text": {
+        "source_bytes": 6880530,
+        "ztok_best": 137330,
+        "stock_cli": 137330,
+        "file_archive_bytes": {
+          "BidiCharacterTest.txt": [
+            137330,
+            137330
+          ]
+        },
+        "checkpoint_best": 140629
+      },
+      "ghostscript-elf": {
+        "source_bytes": 22649096,
+        "ztok_best": 2685656,
+        "stock_cli": 2740901,
+        "file_archive_bytes": {
+          "libgs.so.10.05": [
+            2685656,
+            2740901
+          ]
+        },
+        "checkpoint_best": 2726573
+      }
+    }
+  },
+  "checkpoint_sha256": "384336eb5bfe093557cee211b64e213f2980093a7d005cc3e6f963bea462515f"
+}

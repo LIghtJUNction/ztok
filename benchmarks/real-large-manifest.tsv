@@ -1,0 +1,4 @@
+split	group	filename	source	transform	bytes	sha256
+holdout	pnpm-js	pnpm.mjs	/opt/codex/runtimes/codex-primary-runtime/dependencies/node/node_modules/pnpm/dist/pnpm.mjs	copy	13891041	ddc64218bc85fb88d28b5def06eb01fafb39cb67f7a9465ce736456658cc7f11
+holdout	unicode-text	BidiCharacterTest.txt	/usr/share/unicode/BidiCharacterTest.txt	copy	6880530	18507f7ec57ec8155b7771dbc88f3e3201ad08eba4dba70e4e095ef628020fa8
+holdout	ghostscript-elf	libgs.so.10.05	/usr/lib/x86_64-linux-gnu/libgs.so.10.05	copy	22649096	a030afd86886907be1c8d92ff3ab1bdd888f8c80a956febe72b80c6423d466d2

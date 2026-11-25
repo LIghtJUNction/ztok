@@ -1,0 +1,5 @@
+split	group	filename	source	transform	bytes	sha256
+holdout	android-system	Generic.kl	adb:/system/usr/keylayout/Generic.kl	copy	11420	1cefbfa8a2227ff12fd9ae7453b0e7b5dbd97ff800fbed015a0c80d36420abcd
+holdout	android-system	Generic.kcm	adb:/system/usr/keychars/Generic.kcm	copy	15940	4710a130708720a6eed7f1b56e895b2f0e42579de66e728bdb4e8a7580aea354
+holdout	android-system	platform.xml	adb:/system/etc/permissions/platform.xml	copy	20630	3de6fa7c83a66012fe2ee9ad47348d6dffe2b7c826231ebb94623bf87244e2c8
+holdout	android-system	fonts.xml	adb:/system/etc/fonts.xml	copy	81097	abaf334169e8b2d5d8b7675bbb82863bc67ad465d350b5347be7e1e0b717e3d2

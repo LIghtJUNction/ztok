@@ -1,0 +1,216 @@
+{
+  "manifest_sha256": "9ca021f15b9370200024e35c7474ebec907d2e11bdc0204f82b8077abef08f08",
+  "binary_sha256": "a6cfa6298424a0d21d3ef8f0e32e3bd2ec5901753c86039ac31cedc69e9d2bb7",
+  "ztok_version": "ztok 0.2.0",
+  "zstd_version": "*** Zstandard CLI (64-bit) v1.5.7, by Yann Collet ***",
+  "archive_columns": [
+    "ztok_best",
+    "stock_cli"
+  ],
+  "levels": {
+    "1": {
+      "large-web-js": {
+        "source_bytes": 8622407,
+        "ztok_best": 2215506,
+        "stock_cli": 2214816,
+        "file_archive_bytes": {
+          "41b7f815b8-plotly.js": [
+            2215506,
+            2214816
+          ]
+        }
+      },
+      "rust": {
+        "source_bytes": 95258,
+        "ztok_best": 14450,
+        "stock_cli": 16807,
+        "file_archive_bytes": {
+          "2f5d71135b-serde-json-ser.rs": [
+            6975,
+            8069
+          ],
+          "68c599c981-serde-json-read.rs": [
+            7475,
+            8738
+          ]
+        }
+      },
+      "web": {
+        "source_bytes": 650559,
+        "ztok_best": 125383,
+        "stock_cli": 140515,
+        "file_archive_bytes": {
+          "0d12407612-python-zh.html": [
+            16379,
+            19457
+          ],
+          "2425001171-go-memory.html": [
+            11847,
+            13788
+          ],
+          "31239d03b7-rfc9113.html": [
+            82404,
+            90157
+          ],
+          "b1e4b56d02-curl-tutorial.html": [
+            14753,
+            17113
+          ]
+        }
+      }
+    },
+    "3": {
+      "large-web-js": {
+        "source_bytes": 8622407,
+        "ztok_best": 1876710,
+        "stock_cli": 1994466,
+        "file_archive_bytes": {
+          "41b7f815b8-plotly.js": [
+            1876710,
+            1994466
+          ]
+        }
+      },
+      "rust": {
+        "source_bytes": 95258,
+        "ztok_best": 13825,
+        "stock_cli": 15894,
+        "file_archive_bytes": {
+          "2f5d71135b-serde-json-ser.rs": [
+            6705,
+            7646
+          ],
+          "68c599c981-serde-json-read.rs": [
+            7120,
+            8248
+          ]
+        }
+      },
+      "web": {
+        "source_bytes": 650559,
+        "ztok_best": 117172,
+        "stock_cli": 132370,
+        "file_archive_bytes": {
+          "0d12407612-python-zh.html": [
+            15753,
+            18347
+          ],
+          "2425001171-go-memory.html": [
+            11514,
+            13255
+          ],
+          "31239d03b7-rfc9113.html": [
+            75705,
+            84526
+          ],
+          "b1e4b56d02-curl-tutorial.html": [
+            14200,
+            16242
+          ]
+        }
+      }
+    },
+    "9": {
+      "large-web-js": {
+        "source_bytes": 8622407,
+        "ztok_best": 1672383,
+        "stock_cli": 1696997,
+        "file_archive_bytes": {
+          "41b7f815b8-plotly.js": [
+            1672383,
+            1696997
+          ]
+        }
+      },
+      "rust": {
+        "source_bytes": 95258,
+        "ztok_best": 12982,
+        "stock_cli": 14195,
+        "file_archive_bytes": {
+          "2f5d71135b-serde-json-ser.rs": [
+            6210,
+            6786
+          ],
+          "68c599c981-serde-json-read.rs": [
+            6772,
+            7409
+          ]
+        }
+      },
+      "web": {
+        "source_bytes": 650559,
+        "ztok_best": 108598,
+        "stock_cli": 117560,
+        "file_archive_bytes": {
+          "0d12407612-python-zh.html": [
+            14254,
+            15730
+          ],
+          "2425001171-go-memory.html": [
+            10983,
+            12131
+          ],
+          "31239d03b7-rfc9113.html": [
+            69743,
+            74554
+          ],
+          "b1e4b56d02-curl-tutorial.html": [
+            13618,
+            15145
+          ]
+        }
+      }
+    },
+    "19": {
+      "large-web-js": {
+        "source_bytes": 8622407,
+        "ztok_best": 1496446,
+        "stock_cli": 1499021,
+        "file_archive_bytes": {
+          "41b7f815b8-plotly.js": [
+            1496446,
+            1499021
+          ]
+        }
+      },
+      "rust": {
+        "source_bytes": 95258,
+        "ztok_best": 12531,
+        "stock_cli": 13558,
+        "file_archive_bytes": {
+          "2f5d71135b-serde-json-ser.rs": [
+            5975,
+            6446
+          ],
+          "68c599c981-serde-json-read.rs": [
+            6556,
+            7112
+          ]
+        }
+      },
+      "web": {
+        "source_bytes": 650559,
+        "ztok_best": 102510,
+        "stock_cli": 109576,
+        "file_archive_bytes": {
+          "0d12407612-python-zh.html": [
+            13708,
+            14609
+          ],
+          "2425001171-go-memory.html": [
+            10684,
+            11734
+          ],
+          "31239d03b7-rfc9113.html": [
+            64865,
+            68598
+          ],
+          "b1e4b56d02-curl-tutorial.html": [
+            13253,
+            14635
+          ]
+        }
+      }
+    }
+  }
+}
