@@ -1,0 +1,10 @@
+tokenizer.json	ab26b2add729e6f645bd869f228f14190a06615538f3be6f7786f33d13d78ad2	https://huggingface.co/google/gemma-4-E2B-it/resolve/4adf15748de9e1a0097b6274cee9c15836c41c37/tokenizer.json
+git-tutorial	9c1b3050b434a2690bf97dde34339b0349e3b405086435b19724917ad81900e0	https://raw.githubusercontent.com/git/git/v2.47.0/Documentation/gittutorial.txt
+cpython-pathlib	b48c9afd06eaf5b60ed3a0be4232fd3e3a72564e10c84d03b7ba388e0b703199	https://raw.githubusercontent.com/python/cpython/v3.12.0/Lib/pathlib.py
+cpython-expressions	738e313aa115ba635a3851af2f16843594be5bb0b05ce15c5e01623e8f4e1e7f	https://raw.githubusercontent.com/python/cpython/v3.12.0/Doc/reference/expressions.rst
+rust-vec	fd7baa9ff36279b8685d3c43c5bf6917ada16cc4f50abb23dcd04e5a88ceaf35	https://raw.githubusercontent.com/rust-lang/rust/1.80.0/library/alloc/src/vec/mod.rs
+linux-vfs	e8ca6a188b62f25f0b07463963d293937168e8cecfeb6c5561db5834e6548a6e	https://raw.githubusercontent.com/torvalds/linux/v6.9/fs/inode.c
+linux-zh	38b0d7dccbe62d886fcdb3ac78f275902c8cc3f945261586101f97797397f7eb	https://raw.githubusercontent.com/torvalds/linux/v6.9/Documentation/translations/zh_CN/process/submitting-patches.rst
+linux-ja	6751fee4ab2948ac93ff85658dda449ecd1abf37563560eac37e7578cadea6ce	https://raw.githubusercontent.com/torvalds/linux/v6.9/Documentation/translations/ja_JP/SubmittingPatches
+rfc8259	61a5378f4255c720beb2a4b4a63b29540147c140f36988bf086291989b4cd2d7	https://www.rfc-editor.org/rfc/rfc8259.txt
+rfc9110	21c1cdce6ab0e5509b04d84a28000836c7a087cf786efe6f04877ebfff47232a	https://www.rfc-editor.org/rfc/rfc9110.txt

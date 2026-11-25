@@ -1,0 +1,14 @@
+[package]
+name = "ztok"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+description = "Lossless Gemma 4 vocabulary compression with Zstandard"
+license = "Apache-2.0"
+repository = "https://github.com/LIghtJUNction/ztok"
+keywords = ["compression", "zstd", "gemma", "dictionary"]
+categories = ["compression", "command-line-utilities"]
+
+[profile.release]
+lto = "thin"
+strip = "debuginfo"

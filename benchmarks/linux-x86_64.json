@@ -1,0 +1,576 @@
+{
+  "cpu": "AMD EPYC 9V74 80-Core Processor",
+  "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "affinity": [
+    0
+  ],
+  "libzstd": "1.5.7",
+  "zstd_cli": "*** Zstandard CLI (64-bit) v1.5.7, by Yann Collet ***",
+  "level": 3,
+  "checksum": true,
+  "in_process_rounds": 7,
+  "cli_rounds": 15,
+  "metric_order": [
+    "compress_ztok",
+    "compress_zstd",
+    "decompress_ztok",
+    "decompress_zstd"
+  ],
+  "ztok_cli_bytes": 683856,
+  "groups": {
+    "chinese-messages": {
+      "files": 1,
+      "input_bytes": 65545,
+      "ztok_bytes": 26786,
+      "zstd_bytes": 27249,
+      "first_block_mode_counts": "3=1",
+      "sha256_len_prefixed": "e8199cedbf32dcf8e2521c44e3e0adf659debb520b436cb123c346464dd68fe0",
+      "throughput_MiB_s": [
+        101.126,
+        287.511,
+        966.428,
+        948.58
+      ],
+      "median_batch_ns": [
+        618126,
+        217413,
+        64680,
+        65897
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          589228,
+          832330
+        ],
+        [
+          199281,
+          233665
+        ],
+        [
+          64481,
+          70742
+        ],
+        [
+          62409,
+          74205
+        ]
+      ]
+    },
+    "elf-executable": {
+      "files": 1,
+      "input_bytes": 158632,
+      "ztok_bytes": 73861,
+      "zstd_bytes": 73849,
+      "first_block_mode_counts": "0=1",
+      "sha256_len_prefixed": "b6176046989f9481f546cc4ba211e8d7ed0d695a0bea761e26c5d6b6a635181b",
+      "throughput_MiB_s": [
+        77.655,
+        222.746,
+        927.697,
+        943.998
+      ],
+      "median_batch_ns": [
+        1948135,
+        679174,
+        163074,
+        160258
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          1897270,
+          2696943
+        ],
+        [
+          668485,
+          786755
+        ],
+        [
+          162129,
+          168482
+        ],
+        [
+          158981,
+          163401
+        ]
+      ]
+    },
+    "english-fiction": {
+      "files": 1,
+      "input_bytes": 147671,
+      "ztok_bytes": 54880,
+      "zstd_bytes": 55968,
+      "first_block_mode_counts": "3=1",
+      "sha256_len_prefixed": "8872e8fa4e6c10e0f3e63fdd3b4eb77d6635c58c7f28ccdd1821d260dc5368d2",
+      "throughput_MiB_s": [
+        137.181,
+        191.937,
+        909.021,
+        811.752
+      ],
+      "median_batch_ns": [
+        1026601,
+        733729,
+        154925,
+        173489
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          1008766,
+          1054530
+        ],
+        [
+          723420,
+          761407
+        ],
+        [
+          150052,
+          161934
+        ],
+        [
+          172723,
+          177452
+        ]
+      ]
+    },
+    "english-license": {
+      "files": 1,
+      "input_bytes": 35149,
+      "ztok_bytes": 12174,
+      "zstd_bytes": 12620,
+      "first_block_mode_counts": "3=1",
+      "sha256_len_prefixed": "9e14e28bd474cebe6e5800282b779c4fd8e7ddfe54e7671d83c9ba7545270a73",
+      "throughput_MiB_s": [
+        165.123,
+        301.031,
+        888.06,
+        915.691
+      ],
+      "median_batch_ns": [
+        203005,
+        111353,
+        37746,
+        36607
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          184069,
+          234050
+        ],
+        [
+          106641,
+          130246
+        ],
+        [
+          36798,
+          42350
+        ],
+        [
+          35909,
+          38792
+        ]
+      ]
+    },
+    "gzip-code": {
+      "files": 1,
+      "input_bytes": 28118,
+      "ztok_bytes": 28144,
+      "zstd_bytes": 28132,
+      "first_block_mode_counts": "0=1",
+      "sha256_len_prefixed": "18d4002ff0355708c4dab57c9f23e5a839a10ef4c647cd11ebc6ba7c55d7fa94",
+      "throughput_MiB_s": [
+        1527.248,
+        1611.503,
+        10157.354,
+        10238.799
+      ],
+      "median_batch_ns": [
+        17558,
+        16640,
+        2640,
+        2619
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          17261,
+          17850
+        ],
+        [
+          16260,
+          16683
+        ],
+        [
+          2593,
+          2672
+        ],
+        [
+          2585,
+          2691
+        ]
+      ]
+    },
+    "jpeg-photo": {
+      "files": 1,
+      "input_bytes": 61306,
+      "ztok_bytes": 61332,
+      "zstd_bytes": 61320,
+      "first_block_mode_counts": "0=1",
+      "sha256_len_prefixed": "8b6a4bc21ac03d0c755523a785be8bcc14117e25045f9a8d28f715451ecae08d",
+      "throughput_MiB_s": [
+        656.53,
+        731.501,
+        10324.202,
+        10282.441
+      ],
+      "median_batch_ns": [
+        89053,
+        79926,
+        5663,
+        5686
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          88422,
+          89715
+        ],
+        [
+          78440,
+          82011
+        ],
+        [
+          5563,
+          5769
+        ],
+        [
+          5543,
+          5889
+        ]
+      ]
+    },
+    "packed-records": {
+      "files": 1,
+      "input_bytes": 262144,
+      "ztok_bytes": 135761,
+      "zstd_bytes": 145874,
+      "first_block_mode_counts": "2=1",
+      "sha256_len_prefixed": "c65148ab7ded07f9a8759e2cf716b1d5a107cf4d492b4996da515777c99d2efc",
+      "throughput_MiB_s": [
+        89.802,
+        191.204,
+        503.906,
+        874.716
+      ],
+      "median_batch_ns": [
+        2783909,
+        1307501,
+        496124,
+        285807
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          2705661,
+          3187838
+        ],
+        [
+          1262074,
+          1514932
+        ],
+        [
+          474217,
+          511616
+        ],
+        [
+          285161,
+          308849
+        ]
+      ],
+      "cli_median_ms_first_file": [
+        3.958976,
+        3.025309,
+        1.709065,
+        1.623727
+      ],
+      "cli_input_bytes": 262144
+    },
+    "python-code": {
+      "files": 1,
+      "input_bytes": 115761,
+      "ztok_bytes": 29877,
+      "zstd_bytes": 30226,
+      "first_block_mode_counts": "3=1",
+      "sha256_len_prefixed": "086e05022e79b84b6befcf26445a46c86332a6696fa0e40124149dd1b95d936c",
+      "throughput_MiB_s": [
+        184.521,
+        413.627,
+        1228.121,
+        1272.838
+      ],
+      "median_batch_ns": [
+        598296,
+        266903,
+        89892,
+        86734
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          597249,
+          620673
+        ],
+        [
+          256135,
+          273076
+        ],
+        [
+          89306,
+          90817
+        ],
+        [
+          86018,
+          89177
+        ]
+      ],
+      "cli_median_ms_first_file": [
+        1.893163,
+        1.668183,
+        1.145255,
+        1.190474
+      ],
+      "cli_input_bytes": 115761
+    },
+    "random-bytes": {
+      "files": 1,
+      "input_bytes": 262144,
+      "ztok_bytes": 262175,
+      "zstd_bytes": 262163,
+      "first_block_mode_counts": "0=1",
+      "sha256_len_prefixed": "ed23876bac201c54683261bf6162339299599882b3043ea41ae73b8037a876b6",
+      "throughput_MiB_s": [
+        1492.867,
+        4642.87,
+        10543.185,
+        10603.554
+      ],
+      "median_batch_ns": [
+        167463,
+        53846,
+        23712,
+        23577
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          164479,
+          176192
+        ],
+        [
+          53519,
+          54794
+        ],
+        [
+          23323,
+          23804
+        ],
+        [
+          23278,
+          23950
+        ]
+      ]
+    },
+    "short-code": {
+      "files": 64,
+      "input_bytes": 17619,
+      "ztok_bytes": 10181,
+      "zstd_bytes": 11771,
+      "first_block_mode_counts": "1=64",
+      "sha256_len_prefixed": "815c514ea13348074aa83bd92e7c189d5768ea91ad01e69a5a3ebf81726a27ab",
+      "throughput_MiB_s": [
+        31.522,
+        70.363,
+        471.115,
+        162.454
+      ],
+      "median_batch_ns": [
+        533056,
+        238803,
+        35666,
+        103431
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          405131,
+          757157
+        ],
+        [
+          219473,
+          294302
+        ],
+        [
+          35435,
+          44581
+        ],
+        [
+          98875,
+          111223
+        ]
+      ]
+    },
+    "short-en": {
+      "files": 64,
+      "input_bytes": 4682,
+      "ztok_bytes": 3998,
+      "zstd_bytes": 4976,
+      "first_block_mode_counts": "1=64",
+      "sha256_len_prefixed": "0001a13ce6766d9921d727a3a704ed953e89a7cb5608bc8460a2a52e095f272d",
+      "throughput_MiB_s": [
+        45.991,
+        49.387,
+        299.651,
+        134.459
+      ],
+      "median_batch_ns": [
+        97086,
+        90411,
+        14901,
+        33208
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          96237,
+          98553
+        ],
+        [
+          88997,
+          97211
+        ],
+        [
+          14685,
+          15275
+        ],
+        [
+          32000,
+          34224
+        ]
+      ],
+      "cli_median_ms_first_file": [
+        0.862089,
+        1.037773,
+        0.839485,
+        1.017473
+      ],
+      "cli_input_bytes": 53
+    },
+    "short-fiction": {
+      "files": 64,
+      "input_bytes": 10798,
+      "ztok_bytes": 8117,
+      "zstd_bytes": 8875,
+      "first_block_mode_counts": "1=64",
+      "sha256_len_prefixed": "795968ad73caf91111246e3b68be4c61c2d36f1f57cc2ee0f1dcf48cee650fae",
+      "throughput_MiB_s": [
+        43.026,
+        56.947,
+        405.488,
+        129.402
+      ],
+      "median_batch_ns": [
+        239339,
+        180832,
+        25396,
+        79580
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          234108,
+          243312
+        ],
+        [
+          178459,
+          182296
+        ],
+        [
+          25179,
+          26282
+        ],
+        [
+          76991,
+          81674
+        ]
+      ]
+    },
+    "short-zh": {
+      "files": 64,
+      "input_bytes": 4504,
+      "ztok_bytes": 4878,
+      "zstd_bytes": 5133,
+      "first_block_mode_counts": "1=63,3=1",
+      "sha256_len_prefixed": "9e81dbfb24c9e2a0028359b5c1e85136810d603bfab401ae476d9e18432ab739",
+      "throughput_MiB_s": [
+        37.741,
+        34.782,
+        249.643,
+        455.595
+      ],
+      "median_batch_ns": [
+        113812,
+        123495,
+        17206,
+        9428
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          103390,
+          177266
+        ],
+        [
+          121118,
+          203456
+        ],
+        [
+          17041,
+          27462
+        ],
+        [
+          9290,
+          10151
+        ]
+      ]
+    },
+    "stock-csv": {
+      "files": 1,
+      "input_bytes": 67924,
+      "ztok_bytes": 25881,
+      "zstd_bytes": 25815,
+      "first_block_mode_counts": "3=1",
+      "sha256_len_prefixed": "1ef504db7e3610060fcf32b54bc2984410719ed0375d867fc5b983ef00985c51",
+      "throughput_MiB_s": [
+        111.009,
+        289.549,
+        1094.545,
+        1110.076
+      ],
+      "median_batch_ns": [
+        583535,
+        223718,
+        59182,
+        58354
+      ],
+      "second_and_sixth_batch_ns": [
+        [
+          577900,
+          589486
+        ],
+        [
+          219945,
+          232627
+        ],
+        [
+          58429,
+          59676
+        ],
+        [
+          57741,
+          60333
+        ]
+      ]
+    }
+  }
+}
